@@ -11,11 +11,17 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
+    var mainWindow: UIWindow = UIWindow()
+    let rootView = ViewHolder()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        mainWindow.rootViewController = UIViewController()
+        rootView.backgroundColor = UIColor.darkGray
+        
+        mainWindow.rootViewController?.view = rootView
+        mainWindow.makeKeyAndVisible()
         return true
     }
 
