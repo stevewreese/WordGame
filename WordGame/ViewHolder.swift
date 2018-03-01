@@ -8,18 +8,32 @@
 
 import UIKit
 
-class ViewHolder: UIView
+class ViewHolder: UIView, ControlDelegate
 {
+   
+    
     var gameCollections : Array<GameView> = Array()
     var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
+    var theControl = GameControl()
     
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        gameCollector.setControl = theControl
         addSubview(gameCollector)
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func makeNewGame() {
+        var game = GameView(frame: UIScreen.main.bounds)
+        game.gameIndex = 0
+        game.setControl = theControl
+        gameCollections.append(game)
+        gameCollector.removeFromSuperview()
+        self.addSubview(game)
+        
     }
 }

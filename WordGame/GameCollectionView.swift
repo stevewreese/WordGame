@@ -21,6 +21,19 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     let width = UIScreen.main.bounds.width
     let height = UIScreen.main.bounds.height
     
+    //the contol
+    private var theControl: GameControl? = nil
+    
+    var setControl: GameControl
+    {
+        set{
+            theControl = newValue
+        }
+        get{
+            return theControl!
+        }
+    }
+    
     override init(frame: CGRect)
     {
         super.init(frame: frame)
@@ -76,9 +89,17 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
             return "Games Ended"
         }
         else
-            
         {
             return "Games Won"
+        }
+    }
+    
+    //touch the row
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        
+        if(indexPath.section == 0)
+        {
+            
         }
     }
     
