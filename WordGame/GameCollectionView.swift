@@ -37,7 +37,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         fatalError("init(coder:) has not been implemented")
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
