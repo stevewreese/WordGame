@@ -18,4 +18,9 @@ protocol ControlDelegate: class
 class GameControl
 {
     weak var delegate: ControlDelegate? = nil
+    
+    func newGame()
+    {
+        delegate?.makeNewGame()
+    }
 }

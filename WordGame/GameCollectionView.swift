@@ -99,7 +99,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         
         if(indexPath.section == 0)
         {
-            
+            theControl.newGame()
         }
     }
     
