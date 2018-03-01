@@ -19,6 +19,7 @@ class ViewHolder: UIView, ControlDelegate
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        theControl.delegate = self
         gameCollector.setControl = theControl
         addSubview(gameCollector)
     }
@@ -28,7 +29,7 @@ class ViewHolder: UIView, ControlDelegate
     }
     
     func makeNewGame() {
-        var game = GameView(frame: UIScreen.main.bounds)
+        let game = GameView(frame: UIScreen.main.bounds)
         game.gameIndex = 0
         game.setControl = theControl
         gameCollections.append(game)

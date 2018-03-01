@@ -45,8 +45,17 @@ class GameView: UIView
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        self.backgroundColor = .white
         
-        let rtZone = CGRect(x: 95, y: 450, width: 225, height: 40)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect)
+    {
+        let rtZone = CGRect(x: 100, y: 10, width: 225, height: 40)
         let paragraphStyleZone = NSMutableParagraphStyle()
         paragraphStyleZone.alignment = .center
         
@@ -59,9 +68,5 @@ class GameView: UIView
         let attrStringZone = NSAttributedString(string: myTextZone,
                                                 attributes: attributesZone)
         attrStringZone.draw(in: rtZone)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }

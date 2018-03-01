@@ -97,10 +97,8 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     //touch the row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         
-        if(indexPath.section == 0)
-        {
-            theControl.newGame()
-        }
+        theControl?.newGame()
+        
     }
     
     
