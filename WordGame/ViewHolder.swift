@@ -10,9 +10,13 @@ import UIKit
 
 class ViewHolder: UIView
 {
+    var gameCollections : Array<GameView> = Array()
+    var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
+    
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        addSubview(gameCollector)
     }
     
     required init?(coder aDecoder: NSCoder) {
