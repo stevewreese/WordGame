@@ -10,8 +10,10 @@ import UIKit
 
 class GameView: UIView
 {
+    var buttons: Array<UIButton> = Array()
+    
     let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
-    let buttonWon = UIButton(frame: CGRect(x: 225, y: 225, width: 100, height: 20))
+    let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
     //see the if the game is inprogress ended by player or won
     enum state {case progress, ended, won}
     private var theState = state.progress
@@ -86,6 +88,8 @@ class GameView: UIView
         
         self.addSubview(buttonWon)
         
+        makeBoard()
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -94,7 +98,7 @@ class GameView: UIView
     
     override func draw(_ rect: CGRect)
     {
-        let rtZone = CGRect(x: 100, y: 100, width: 225, height: 40)
+        let rtZone = CGRect(x: 100, y: 50, width: 225, height: 40)
         let paragraphStyleZone = NSMutableParagraphStyle()
         paragraphStyleZone.alignment = .center
         
@@ -113,6 +117,12 @@ class GameView: UIView
     {
         (theControl?.leaveGame(game: self))!
 
+    }
+    
+    @objc func select(sender: UIButton!)
+    {
+        sender.backgroundColor = .cyan
+        
     }
     
     @objc func end(sender: UIButton!)
@@ -151,5 +161,36 @@ class GameView: UIView
         theState = state.won
         buttonEnd.backgroundColor = .gray
         buttonWon.backgroundColor = .gray
+    }
+    
+    func makeBoard()
+    {
+        var x = 5.4
+        var y = 140.0
+        var i = 0
+        var j = 0
+        while(j < 12)
+        {
+            while(i < 9)
+            {
+                let button = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+                self.addSubview(button)
+                button.backgroundColor = .black
+                button.setTitleColor(.white, for: .normal)
+                button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDown)
+                button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDragEnter)
+                //let tapGesture = UITapGestureRecognizer(target: button, action: Selector("drag"))
+                buttons.append(button)
+                x = x + 45.4
+                
+                i = i + 1
+            }
+            y = y + 45.4
+            j = j + 1
+            i = 0
+            x = 5.4
+        }
+
+        
     }
 }

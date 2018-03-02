@@ -39,6 +39,9 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     override init(frame: CGRect)
     {
         super.init(frame: frame)
+        
+        print(width)
+        print(height)
 
         gameTable = UITableView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         gameTable.register(UITableViewCell.self, forCellReuseIdentifier: "GameCell")
