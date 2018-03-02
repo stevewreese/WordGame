@@ -10,8 +10,9 @@ import UIKit
 
 class GameView: UIView
 {
-    var buttons: Array<UIButton> = Array()
-    
+    var buttons: Array<GameButton> = Array()
+
+    var board = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 736))
     let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
     let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
     //see the if the game is inprogress ended by player or won
@@ -68,7 +69,7 @@ class GameView: UIView
         buttonLeave.setTitle("Leave game", for: .normal)
         buttonLeave.addTarget(self, action: #selector(GameView.leave(sender:)), for: .touchUpInside)
         
-        self.addSubview(buttonLeave)
+        board.addSubview(buttonLeave)
         
         
         
@@ -78,7 +79,7 @@ class GameView: UIView
         buttonEnd.setTitle("End game", for: .normal)
         buttonEnd.addTarget(self, action: #selector(GameView.end(sender:)), for: .touchUpInside)
         
-        self.addSubview(buttonEnd)
+        board.addSubview(buttonEnd)
         
         buttonWon.backgroundColor = .white
         //buttonEvent.layer.cornerRadius = 5
@@ -86,7 +87,7 @@ class GameView: UIView
         buttonWon.setTitle("Win game", for: .normal)
         buttonWon.addTarget(self, action: #selector(GameView.win(sender:)), for: .touchUpInside)
         
-        self.addSubview(buttonWon)
+        board.addSubview(buttonWon)
         
         makeBoard()
         
@@ -169,16 +170,18 @@ class GameView: UIView
         var y = 140.0
         var i = 0
         var j = 0
+        
         while(j < 12)
         {
             while(i < 9)
             {
-                let button = UIButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+                let button = GameButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
+                button.setXandy(x: x, y: y)
                 self.addSubview(button)
                 button.backgroundColor = .black
                 button.setTitleColor(.white, for: .normal)
-                button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDown)
-                button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDragEnter)
+                //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDown)
+                //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDragEnter)
                 //let tapGesture = UITapGestureRecognizer(target: button, action: Selector("drag"))
                 buttons.append(button)
                 x = x + 45.4
@@ -190,7 +193,28 @@ class GameView: UIView
             i = 0
             x = 5.4
         }
+        self.addSubview(board)
 
         
+    }
+    
+    //holy shit this is complicated
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesMoved(touches, with: event)
+        
+        // Get the point to which the finger moved
+        let point: CGPoint = (touches.first?.location(in: board))!
+        for b in buttons
+        {
+            let pointB = CGPoint(x: b.x, y: b.y)
+            if(point.x >= pointB.x && point.x <= pointB.x + 40)
+            {
+                if(point.y >= pointB.y && point.y <= pointB.y + 40)
+                {
+                    b.backgroundColor = .cyan
+                }
+            }
+
+        }
     }
 }

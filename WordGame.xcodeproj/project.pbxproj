@@ -15,6 +15,7 @@
 		9AC47C9B2046538900D13ED4 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC47C9A2046538900D13ED4 /* Game.swift */; };
 		9AC47C9D2046539E00D13ED4 /* GameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC47C9C2046539E00D13ED4 /* GameModel.swift */; };
 		9AC47C9F2046542D00D13ED4 /* GameControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC47C9E2046542D00D13ED4 /* GameControl.swift */; };
+		9AD1487B204A0AEA00B8CE07 /* GameButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD1487A204A0AEA00B8CE07 /* GameButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		9AC47C9A2046538900D13ED4 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		9AC47C9C2046539E00D13ED4 /* GameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModel.swift; sourceTree = "<group>"; };
 		9AC47C9E2046542D00D13ED4 /* GameControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameControl.swift; sourceTree = "<group>"; };
+		9AD1487A204A0AEA00B8CE07 /* GameButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				9AC47C9A2046538900D13ED4 /* Game.swift */,
 				9AC47C9C2046539E00D13ED4 /* GameModel.swift */,
 				9AC47C9E2046542D00D13ED4 /* GameControl.swift */,
+				9AD1487A204A0AEA00B8CE07 /* GameButton.swift */,
 			);
 			path = WordGame;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AC47C972046536400D13ED4 /* GameCollectionView.swift in Sources */,
+				9AD1487B204A0AEA00B8CE07 /* GameButton.swift in Sources */,
 				9AC47C9F2046542D00D13ED4 /* GameControl.swift in Sources */,
 				9AC47C9B2046538900D13ED4 /* Game.swift in Sources */,
 				9AC47C952046533600D13ED4 /* ViewHolder.swift in Sources */,
