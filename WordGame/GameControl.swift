@@ -11,16 +11,32 @@ import Foundation
 //delegates of the control
 protocol ControlDelegate: class
 {
-    func makeNewGame()
+    func makeNewGame(game: GameView)
+    func leavegame(game: GameView)
     
 }
 
 class GameControl
 {
     weak var delegate: ControlDelegate? = nil
+    var theModel : GameModel? = nil
     
-    func newGame()
+    init(model : GameModel)
     {
-        delegate?.makeNewGame()
+        theModel = model
+    }
+    
+    func newGame() -> Array<GameView>
+    {
+        let inProgrees = theModel?.newGame()
+        delegate?.makeNewGame(game: inProgrees![(inProgrees?.count)! - 1])
+        
+        return inProgrees!
+        
+    }
+    
+    func leaveGame(game: GameView)
+    {
+        delegate?.leavegame(game: game)
     }
 }

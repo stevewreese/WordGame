@@ -44,6 +44,16 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         gameTable.delegate = self
         
         addSubview(gameTable)
+        
+        let buttonNewGame = UIButton(frame: CGRect(x: 250, y: 25, width: 150, height: 20))
+        
+        buttonNewGame.backgroundColor = .white
+        //buttonEvent.layer.cornerRadius = 5
+        buttonNewGame.setTitleColor(.black, for: .normal)
+        buttonNewGame.setTitle("New game", for: .normal)
+        buttonNewGame.addTarget(self, action: #selector(GameCollectionView.newGame(sender:)), for: .touchUpInside)
+        
+        self.addSubview(buttonNewGame)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -57,24 +67,28 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0)
         {
-            return gamesInProgress.count + 1
+            return gamesInProgress.count
         }
         else if(section == 1)
         {
-            return gamesEnded.count + 1
+            return gamesEnded.count
         }
         else
         
         {
-            return gamesWon.count + 1
+            return gamesWon.count
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell!
-        cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-        cell.textLabel!.text = "----"
+        if(indexPath.section == 0)
+        {
+            cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
+            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameIndex)"
+        }
+        
         return cell!
     }
     
@@ -97,7 +111,14 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     //touch the row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
         
-        theControl?.newGame()
+        
+        
+    }
+    
+    @objc func newGame(sender: UIButton!)
+    {
+        gamesInProgress = (theControl?.newGame())!
+        gameTable.reloadData()
         
     }
     

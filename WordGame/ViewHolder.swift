@@ -12,15 +12,18 @@ class ViewHolder: UIView, ControlDelegate
 {
    
     
-    var gameCollections : Array<GameView> = Array()
     var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
-    var theControl = GameControl()
+    var theModel = GameModel()
+    var theControl: GameControl? = nil
+    
     
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        theControl.delegate = self
-        gameCollector.setControl = theControl
+        
+        theControl = GameControl(model : theModel)
+        theControl?.delegate = self
+        gameCollector.setControl = theControl!
         addSubview(gameCollector)
     }
     
@@ -28,13 +31,16 @@ class ViewHolder: UIView, ControlDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    func makeNewGame() {
-        let game = GameView(frame: UIScreen.main.bounds)
-        game.gameIndex = 0
-        game.setControl = theControl
-        gameCollections.append(game)
+    func makeNewGame(game: GameView) {
+        game.setControl = theControl!
         gameCollector.removeFromSuperview()
         self.addSubview(game)
         
+    }
+    
+    func leavegame(game: GameView)
+    {
+        game.removeFromSuperview()
+        self.addSubview(gameCollector)
     }
 }

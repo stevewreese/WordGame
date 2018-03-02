@@ -28,6 +28,15 @@ class GameView: UIView
             return index
         }
     }
+    private var gameNumber = 0
+    var gameNumberGetSet: Int{
+        set{
+            gameNumber = newValue
+        }
+        get{
+            return gameNumber
+        }
+    }
     
     //the contol
     private var theControl: GameControl? = nil
@@ -47,6 +56,16 @@ class GameView: UIView
         super.init(frame: frame)
         self.backgroundColor = .white
         
+        let buttonLeave = UIButton(frame: CGRect(x: 25, y: 25, width: 150, height: 20))
+        
+        buttonLeave.backgroundColor = .white
+        //buttonEvent.layer.cornerRadius = 5
+        buttonLeave.setTitleColor(.black, for: .normal)
+        buttonLeave.setTitle("Leave game", for: .normal)
+        buttonLeave.addTarget(self, action: #selector(GameView.leave(sender:)), for: .touchUpInside)
+        
+        self.addSubview(buttonLeave)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -64,9 +83,15 @@ class GameView: UIView
                               NSAttributedStringKey.foregroundColor : UIColor.black,
                               ] as [NSAttributedStringKey : Any]
         
-        let myTextZone = "Game \(index)"
+        let myTextZone = "Game \(gameNumber)"
         let attrStringZone = NSAttributedString(string: myTextZone,
                                                 attributes: attributesZone)
         attrStringZone.draw(in: rtZone)
+    }
+    
+    @objc func leave(sender: UIButton!)
+    {
+        (theControl?.leaveGame(game: self))!
+
     }
 }
