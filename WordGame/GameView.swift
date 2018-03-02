@@ -10,6 +10,8 @@ import UIKit
 
 class GameView: UIView
 {
+    let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
+    let buttonWon = UIButton(frame: CGRect(x: 225, y: 225, width: 100, height: 20))
     //see the if the game is inprogress ended by player or won
     enum state {case progress, ended, won}
     private var theState = state.progress
@@ -56,7 +58,7 @@ class GameView: UIView
         super.init(frame: frame)
         self.backgroundColor = .white
         
-        let buttonLeave = UIButton(frame: CGRect(x: 25, y: 25, width: 150, height: 20))
+        let buttonLeave = UIButton(frame: CGRect(x: 25, y: 25, width: 100, height: 20))
         
         buttonLeave.backgroundColor = .white
         //buttonEvent.layer.cornerRadius = 5
@@ -66,6 +68,24 @@ class GameView: UIView
         
         self.addSubview(buttonLeave)
         
+        
+        
+        buttonEnd.backgroundColor = .white
+        //buttonEvent.layer.cornerRadius = 5
+        buttonEnd.setTitleColor(.black, for: .normal)
+        buttonEnd.setTitle("End game", for: .normal)
+        buttonEnd.addTarget(self, action: #selector(GameView.end(sender:)), for: .touchUpInside)
+        
+        self.addSubview(buttonEnd)
+        
+        buttonWon.backgroundColor = .white
+        //buttonEvent.layer.cornerRadius = 5
+        buttonWon.setTitleColor(.black, for: .normal)
+        buttonWon.setTitle("Win game", for: .normal)
+        buttonWon.addTarget(self, action: #selector(GameView.win(sender:)), for: .touchUpInside)
+        
+        self.addSubview(buttonWon)
+        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -74,7 +94,7 @@ class GameView: UIView
     
     override func draw(_ rect: CGRect)
     {
-        let rtZone = CGRect(x: 100, y: 10, width: 225, height: 40)
+        let rtZone = CGRect(x: 100, y: 100, width: 225, height: 40)
         let paragraphStyleZone = NSMutableParagraphStyle()
         paragraphStyleZone.alignment = .center
         
@@ -93,5 +113,43 @@ class GameView: UIView
     {
         (theControl?.leaveGame(game: self))!
 
+    }
+    
+    @objc func end(sender: UIButton!)
+    {
+        if(theState == state.ended || theState == state.won)
+        {
+        }
+        else
+        {
+            theControl?.endGame(game: self)
+        }
+        
+    }
+    
+    @objc func win(sender: UIButton!)
+    {
+        if(theState == state.ended || theState == state.won)
+        {
+        }
+        else
+        {
+            theControl?.winGame(game: self)
+        }
+        
+    }
+    
+    func endState()
+    {
+        theState = state.ended
+        buttonEnd.backgroundColor = .gray
+        buttonWon.backgroundColor = .gray
+    }
+    
+    func winState()
+    {
+        theState = state.won
+        buttonEnd.backgroundColor = .gray
+        buttonWon.backgroundColor = .gray
     }
 }

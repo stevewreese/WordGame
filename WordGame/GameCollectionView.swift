@@ -10,6 +10,8 @@ import UIKit
 
 class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
 {
+    
+    
     //list of created Gameviews
     var gamesInProgress : Array<GameView> = Array()
     var gamesEnded : Array<GameView> = Array()
@@ -37,7 +39,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        
+
         gameTable = UITableView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         gameTable.register(UITableViewCell.self, forCellReuseIdentifier: "GameCell")
         gameTable.dataSource = self
@@ -86,7 +88,16 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         if(indexPath.section == 0)
         {
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameIndex)"
+            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameNumberGetSet)"
+        }
+        else if(indexPath.section == 1)
+        {
+            cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
+            cell.textLabel!.text = "Game \(gamesEnded[indexPath.row].gameNumberGetSet)"
+        }
+        else{
+            cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
+            cell.textLabel!.text = "Game \(gamesWon[indexPath.row].gameNumberGetSet)"
         }
         
         return cell!
@@ -110,7 +121,17 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     
     //touch the row
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
-        
+        if(indexPath.section == 0)
+        {
+            theControl?.viewProgGame(index: indexPath.row)
+        }
+        else if(indexPath.section == 1)
+        {
+            theControl?.viewEndGame(index: indexPath.row)
+        }
+        else{
+            theControl?.viewWinGame(index: indexPath.row)
+        }
         
         
     }
@@ -120,6 +141,24 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         gamesInProgress = (theControl?.newGame())!
         gameTable.reloadData()
         
+    }
+ 
+    func updateEnded(games: Array<GameView>) {
+        gamesEnded = games
+        if let index = gamesInProgress.index(of: games[games.count - 1]) {
+            gamesInProgress.remove(at: index)
+        }
+        gameTable.reloadData()
+        theControl?.leaveGame(game: gamesEnded[games.count - 1])
+    }
+    
+    func updateWon(games: Array<GameView>) {
+        gamesWon = games
+        if let index = gamesInProgress.index(of: games[games.count - 1]) {
+            gamesInProgress.remove(at: index)
+        }
+        gameTable.reloadData()
+        theControl?.leaveGame(game: gamesWon[games.count - 1])
     }
     
     

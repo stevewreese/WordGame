@@ -10,8 +10,6 @@ import UIKit
 
 class ViewHolder: UIView, ControlDelegate
 {
-   
-    
     var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
     var theModel = GameModel()
     var theControl: GameControl? = nil
@@ -42,5 +40,21 @@ class ViewHolder: UIView, ControlDelegate
     {
         game.removeFromSuperview()
         self.addSubview(gameCollector)
+    }
+    
+    func addGame(game: GameView)
+    {
+        gameCollector.removeFromSuperview()
+        self.addSubview(game)
+    }
+    
+    func updateEnded(games: Array<GameView>)
+    {
+        gameCollector.updateEnded(games: games)
+    }
+    
+    func updateWon(games: Array<GameView>)
+    {
+        gameCollector.updateWon(games: games)
     }
 }
