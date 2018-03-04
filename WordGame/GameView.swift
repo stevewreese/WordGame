@@ -11,13 +11,17 @@ import UIKit
 class GameView: UIView
 {
     var buttons: Array<GameButton> = Array()
+    var wordButtons: Array<GameButton> = Array()
 
     var board = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 736))
     let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
     let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
     //see the if the game is inprogress ended by player or won
     enum state {case progress, ended, won}
+    enum direction{case notSet, n, ne, e, se, s, sw, w, nw}
+    var theDirection = direction.notSet
     private var theState = state.progress
+    var lastPoint: CGPoint = CGPoint(x: -1000, y: -1000)
     var getState: state{
         get{
             return theState
@@ -198,23 +202,232 @@ class GameView: UIView
         
     }
     
-    //holy shit this is complicated
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        
-        // Get the point to which the finger moved
-        let point: CGPoint = (touches.first?.location(in: board))!
-        for b in buttons
+        if(theState == state.progress)
         {
-            let pointB = CGPoint(x: b.x, y: b.y)
-            if(point.x >= pointB.x && point.x <= pointB.x + 40)
+            
+            
+            // bug of missed highlighted buttons
+            let point: CGPoint = (touches.first?.location(in: board))!
+            for b in buttons
             {
-                if(point.y >= pointB.y && point.y <= pointB.y + 40)
+                if(b.backgroundColor == .blue)
                 {
-                    b.backgroundColor = .cyan
+                    
+                }
+                else
+                {
+                    let pointB = CGPoint(x: b.x, y: b.y)
+                    if(theDirection == direction.notSet)
+                    {
+                        if(wordButtons.count == 2)
+                        {
+                            if(wordButtons[0].x < wordButtons[1].x && wordButtons[0].y == wordButtons[1].y)
+                            {
+                                theDirection = direction.e
+                            }
+                            else if(wordButtons[0].x > wordButtons[1].x && wordButtons[0].y == wordButtons[1].y)
+                            {
+                                theDirection = direction.w
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x && wordButtons[0].y < wordButtons[1].y)
+                            {
+                                theDirection = direction.n
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x && wordButtons[0].y > wordButtons[1].y)
+                            {
+                                theDirection = direction.s
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x - 45.4 && wordButtons[0].y == wordButtons[1].y - 45.4)
+                            {
+                                theDirection = direction.ne
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x + 45.4 && wordButtons[0].y == wordButtons[1].y - 45.4)
+                            {
+                                theDirection = direction.nw
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x - 45.4 && wordButtons[0].y == wordButtons[1].y + 45.4)
+                            {
+                                theDirection = direction.se
+                            }
+                            else if(wordButtons[0].x == wordButtons[1].x + 45.4 && wordButtons[0].y == wordButtons[1].y + 45.4)
+                            {
+                                theDirection = direction.sw
+                            }
+                        }
+                    }
+                    if((point.x >= pointB.x && point.x <= pointB.x + 40)&&(point.y >= pointB.y && point.y <= pointB.y + 40))
+                    {
+                        if(b.exited)
+                        {
+                            b.backgroundColor = .black
+                            b.entered = false
+                            b.added = false
+                            if let index = wordButtons.index(of: b) {
+                                wordButtons.remove(at: index)
+                            }
+                        }
+                        else{
+                            if(theDirection != direction.notSet)
+                            {
+                                var fingerDirection = direction.notSet
+                                if(wordButtons[wordButtons.count - 1].x < b.x && wordButtons[wordButtons.count - 1].y == b.y)
+                                {
+                                    fingerDirection = direction.e
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x > b.x && wordButtons[wordButtons.count - 1].y == b.y)
+                                {
+                                    fingerDirection = direction.w
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x == b.x && wordButtons[wordButtons.count - 1].y < b.y)
+                                {
+                                    fingerDirection = direction.n
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x == b.x && wordButtons[wordButtons.count - 1].y > b.y)
+                                {
+                                    fingerDirection = direction.s
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x  == b.x - 45.4 && wordButtons[wordButtons.count - 1].y == b.y - 45.4)
+                                {
+                                    fingerDirection = direction.ne
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x == b.x + 45.4 && wordButtons[wordButtons.count - 1].y == b.y - 45.4)
+                                {
+                                    fingerDirection = direction.nw
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x == b.x - 45.4 && wordButtons[wordButtons.count - 1].y == b.y + 45.4)
+                                {
+                                    fingerDirection = direction.se
+                                }
+                                else if(wordButtons[wordButtons.count - 1].x  == b.x + 45.4 && wordButtons[wordButtons.count - 1].y == b.y + 45.4)
+                                {
+                                    fingerDirection = direction.sw
+                                }
+                                
+                                if(fingerDirection == theDirection)
+                                {
+                                    b.backgroundColor = .cyan
+                                    b.entered = true
+                                    if(!b.added)
+                                    {
+                                        b.added = true
+                                        wordButtons.append(b)
+                                        
+                                    }
+                                }
+                                
+                            }
+                            else
+                            {
+                                b.backgroundColor = .cyan
+                                b.entered = true
+                                if(!b.added)
+                                {
+                                    b.added = true
+                                    wordButtons.append(b)
+                                    
+                                }
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        if(b.entered)
+                        {
+                            b.exited = true
+                        }
+                        if(!b.entered && b.exited)
+                        {
+                            b.exited = false
+                        }
+                    }
                 }
             }
-
         }
+        
+    }
+    
+    //bug
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        if(theState == state.progress)
+        {
+            // Get the point to which the finger moved
+            let point: CGPoint = (touches.first?.location(in: board))!
+            for b in buttons
+            {
+                if(b.backgroundColor == .blue)
+                {
+                    
+                }
+                else
+                {
+                    let pointB = CGPoint(x: b.x, y: b.y)
+                    if(point.x >= pointB.x && point.x <= pointB.x + 40)
+                    {
+                        if(point.y >= pointB.y && point.y <= pointB.y + 40)
+                        {
+                            b.backgroundColor = .cyan
+                            b.entered = true
+                            if(!b.added)
+                            {
+                                b.added = true
+                                wordButtons.append(b)
+                            }
+                            
+                        }
+                    }
+                }
+                
+                
+            }
+        }
+        
+        
+        
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        super.touchesEnded(touches, with: event)
+        if(theState == state.progress)
+        {
+            // Get the point to which the finger moved
+            let point: CGPoint = (touches.first?.location(in: board))!
+            for b in buttons
+            {
+                let pointB = CGPoint(x: b.x, y: b.y)
+                if(point.x >= pointB.x && point.x <= pointB.x + 40)
+                {
+                    if(point.y >= pointB.y && point.y <= pointB.y + 40)
+                    {
+                        if(b.entered == true)
+                        {
+                            b.exited = true
+                        }
+                        if(b.entered == false && b.exited == true)
+                        {
+                            b.exited = false
+                        }
+                        
+                    }
+                }
+                
+            }
+            for b1 in wordButtons
+            {
+                b1.added = false
+                b1.backgroundColor = .blue
+            }
+            wordButtons.removeAll()
+            theDirection = direction.notSet
+        }
+        
+        
+        
+
     }
 }
