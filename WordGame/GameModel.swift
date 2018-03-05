@@ -18,6 +18,8 @@ class GameModel
     private var gamesWinIndex = 0
     private var gameNumber = 1
     
+    private var dictionary : Array<String> = Array()
+    
     func newGame() -> Array<GameView>
     {
         let game = GameView(frame: UIScreen.main.bounds)
@@ -26,6 +28,8 @@ class GameModel
         gamesInProgress.append(game)
         gamesInProgressIndex = gamesInProgressIndex + 1
         gameNumber = gameNumber + 1
+        addWords()
+        var gameBoard = Game(dic: dictionary)
         return gamesInProgress
         
     }
@@ -70,6 +74,20 @@ class GameModel
     func getWinGame(index: Int) -> GameView
     {
         return gamesWon[index]
+    }
+    
+    func addWords()
+    {
+        dictionary.append("unit")
+        dictionary.append("test")
+        dictionary.append("doomsday")
+        dictionary.append("Steve")
+        dictionary.append("Warhead")
+        dictionary.append("BigWordToTest")
+        dictionary.append("123456789")
+        dictionary.append("GREAT")
+        dictionary.append("GREAT")
+        
     }
     
     
