@@ -13,6 +13,9 @@ class GameView: UIView
     var buttons: Array<GameButton> = Array()
     var wordButtons: Array<GameButton> = Array()
 
+    var theGame: Game? = nil
+    
+    
     var board = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 736))
     let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
     let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
@@ -22,6 +25,8 @@ class GameView: UIView
     var theDirection = direction.notSet
     private var theState = state.progress
     var lastPoint: CGPoint = CGPoint(x: -1000, y: -1000)
+    
+    
     var getState: state{
         get{
             return theState
@@ -425,9 +430,23 @@ class GameView: UIView
             wordButtons.removeAll()
             theDirection = direction.notSet
         }
-        
-        
-        
 
+
+    }
+    
+    func populateBoard()
+    {
+        var i = 0
+        
+        while(i < 12)
+        {
+            var j = 0
+            while(j < 9)
+            {
+                buttons[i*9 + j].setTitle(theGame?.board[i][j], for: .normal)
+                j = j + 1
+            }
+            i = i + 1
+        }
     }
 }

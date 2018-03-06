@@ -25,11 +25,14 @@ class GameModel
         let game = GameView(frame: UIScreen.main.bounds)
         game.gameIndex = gamesInProgressIndex
         game.gameNumberGetSet = gameNumber
+        addWords()
+        var gameBoard = Game(dic: dictionary)
+        game.theGame = gameBoard
+        game.populateBoard()
         gamesInProgress.append(game)
         gamesInProgressIndex = gamesInProgressIndex + 1
         gameNumber = gameNumber + 1
-        addWords()
-        var gameBoard = Game(dic: dictionary)
+        
         return gamesInProgress
         
     }
