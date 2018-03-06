@@ -81,14 +81,14 @@ class GameModel
     
     func addWords()
     {
+        dictionary.removeAll()
         dictionary.append("unit")
         dictionary.append("test")
         dictionary.append("doomsday")
         dictionary.append("Steve")
         dictionary.append("Warhead")
-        dictionary.append("BigWordToTest")
+        dictionary.append("XXXXXXXXXXXXX")
         dictionary.append("123456789")
-        dictionary.append("GREAT")
         dictionary.append("GREAT")
         
     }

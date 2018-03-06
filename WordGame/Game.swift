@@ -10,6 +10,7 @@ import Foundation
 
 class Game{
     private var dictionary : Array<String> = Array()
+    private var wordsNotUsed : Array<String> = Array()
     var indexes: Array<Int> = Array()
     var board:[[String]] = Array(repeating: Array(repeating: "", count: 9), count: 12)
     var direction:[String] = ["n", "ne", "e", "se", "s", "sw", "w", "nw"]
@@ -18,7 +19,6 @@ class Game{
     {
         dictionary = dic
         makeBoard()
-        print(board)
     }
     
     func makeBoard()
@@ -81,12 +81,11 @@ class Game{
                 if(usedIndexes.count >= indexes.count)
                 {
                     looking = false
+                    wordsNotUsed.append(word)
                 }
             }
-            
-            
-            
         }
+        setLetters()
     }
     
     func makeIndexes()
@@ -403,6 +402,27 @@ class Game{
             return true
             default:
                 return false
+        }
+    }
+    
+    func setLetters()
+    {
+        for word in wordsNotUsed
+        {
+            for theChar in word
+            {
+                var Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+                var theIndex = indexes[Rand]
+                var row = theIndex/9
+                var col = theIndex%9
+                board[row][col] = "\(theChar)"
+                if let index = indexes.index(of: theIndex) {
+                    indexes.remove(at: index)
+                }
+            }
+            
+            
+            
         }
     }
     
