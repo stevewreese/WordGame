@@ -14,6 +14,8 @@ class Game{
     var indexes: Array<Int> = Array()
     var board:[[String]] = Array(repeating: Array(repeating: "", count: 9), count: 12)
     var direction:[String] = ["n", "ne", "e", "se", "s", "sw", "w", "nw"]
+    var alphabet: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    var specialIndex:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: 4)
     
     init(dic: Array<String>)
     {
@@ -86,6 +88,7 @@ class Game{
             }
         }
         setLetters()
+        setSpecialletters()
     }
     
     func makeIndexes()
@@ -423,6 +426,27 @@ class Game{
             
             
             
+        }
+    }
+    
+    func setSpecialletters()
+    {
+        var i = 0
+        while(i < 4)
+        {
+            var Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+            var theIndex = indexes[Rand]
+            var RandABC = Int(arc4random_uniform(26))
+            var theChar = "\(alphabet[RandABC])"
+            var row = theIndex/9
+            var col = theIndex%9
+            board[row][col] = "\(theChar)"
+            specialIndex[i][0] = row
+            specialIndex[i][1] = col
+            if let index = indexes.index(of: theIndex) {
+                indexes.remove(at: index)
+            }
+            i = i + 1
         }
     }
     

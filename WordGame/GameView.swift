@@ -443,6 +443,13 @@ class GameView: UIView
             var j = 0
             while(j < 9)
             {
+                for theSpecInd in (theGame?.specialIndex)!
+                {
+                    if(theSpecInd[0] == i && theSpecInd[1] == j)
+                    {
+                        buttons[i*9 + j].backgroundColor = .red
+                    }
+                }
                 buttons[i*9 + j].setTitle(theGame?.board[i][j], for: .normal)
                 j = j + 1
             }
