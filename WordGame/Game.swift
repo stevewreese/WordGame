@@ -37,7 +37,7 @@ class Game{
                 var index = 0
                 while(lookingForIndex)
                 {
-                    var Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+                    let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
                     index = indexes[Rand]
                     if(!usedIndexes.contains(index))
                     {
@@ -414,10 +414,10 @@ class Game{
         {
             for theChar in word
             {
-                var Rand = Int(arc4random_uniform(UInt32(indexes.count)))
-                var theIndex = indexes[Rand]
-                var row = theIndex/9
-                var col = theIndex%9
+                let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+                let theIndex = indexes[Rand]
+                let row = theIndex/9
+                let col = theIndex%9
                 board[row][col] = "\(theChar)"
                 if let index = indexes.index(of: theIndex) {
                     indexes.remove(at: index)
@@ -434,12 +434,12 @@ class Game{
         var i = 0
         while(i < 4)
         {
-            var Rand = Int(arc4random_uniform(UInt32(indexes.count)))
-            var theIndex = indexes[Rand]
-            var RandABC = Int(arc4random_uniform(26))
-            var theChar = "\(alphabet[RandABC])"
-            var row = theIndex/9
-            var col = theIndex%9
+            let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+            let theIndex = indexes[Rand]
+            let RandABC = Int(arc4random_uniform(26))
+            let theChar = "\(alphabet[RandABC])"
+            let row = theIndex/9
+            let col = theIndex%9
             board[row][col] = "\(theChar)"
             specialIndex[i][0] = row
             specialIndex[i][1] = col

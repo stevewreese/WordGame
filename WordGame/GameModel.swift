@@ -26,7 +26,7 @@ class GameModel
         game.gameIndex = gamesInProgressIndex
         game.gameNumberGetSet = gameNumber
         addWords()
-        var gameBoard = Game(dic: dictionary)
+        let gameBoard = Game(dic: dictionary)
         game.theGame = gameBoard
         game.populateBoard()
         gamesInProgress.append(game)

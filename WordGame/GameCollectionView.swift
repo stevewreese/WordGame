@@ -1,7 +1,7 @@
 //
 //  GameCollectionView.swift
 //  WordGame
-//
+// the Game colletion view to show all the game inprogess won or ended
 //  Created by Stephen Reese on 2/27/18.
 //  Copyright © 2018 Stephen Reese. All rights reserved.
 //
@@ -13,10 +13,11 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     
     
     //list of created Gameviews
-    var gamesInProgress : Array<GameView> = Array()
-    var gamesEnded : Array<GameView> = Array()
-    var gamesWon : Array<GameView> = Array()
+    var gamesInProgress : Array<GameView> = Array() //games currently in progress
+    var gamesEnded : Array<GameView> = Array() //games ended prematurely
+    var gamesWon : Array<GameView> = Array() //games won by the player
     
+    //teh table to show the games
     var gameTable : UITableView!
     
     //get the sidth and height of phone
@@ -25,7 +26,6 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     
     //the contol
     private var theControl: GameControl? = nil
-    
     var setControl: GameControl
     {
         set{
@@ -39,10 +39,8 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        
-        print(width)
-        print(height)
 
+        //set the table
         gameTable = UITableView(frame: CGRect(x: 0, y: 0, width: width, height: height))
         gameTable.register(UITableViewCell.self, forCellReuseIdentifier: "GameCell")
         gameTable.dataSource = self
@@ -50,6 +48,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         
         addSubview(gameTable)
         
+        //button to make a new game
         let buttonNewGame = UIButton(frame: CGRect(x: 250, y: 25, width: 150, height: 20))
         
         buttonNewGame.backgroundColor = .white
@@ -65,10 +64,12 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         fatalError("init(coder:) has not been implemented")
     }
     
+    //set the section 3 section for games in progress, game ended and games won
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
     }
     
+    //set the number of cells in the section
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(section == 0)
         {
@@ -85,6 +86,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
+    //set the cell name
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell!
@@ -106,7 +108,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         return cell!
     }
     
-    //add title
+    //add title for the sections
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if(section == 0)
         {
