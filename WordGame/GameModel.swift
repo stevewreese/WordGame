@@ -10,6 +10,9 @@ import UIKit
 
 class GameModel
 {
+    let documentsPath: String = Bundle.main.path(forResource: "Dictionary", ofType: "txt")!
+    var textView: String = ""
+    
     var gamesInProgress : Array<GameView> = Array()
     var gamesEnded : Array<GameView> = Array()
     var gamesWon : Array<GameView> = Array()
@@ -19,6 +22,40 @@ class GameModel
     private var gameNumber = 1
     
     private var dictionary : Array<String> = Array()
+    
+    init()
+    {
+        //filePath = documentsPath + "/Dictionary.txt"
+        getDictionary()
+    }
+    
+    func getDictionary()
+    {
+        if let path = Bundle.main.path(forResource: "Dictionary", ofType: "txt"){
+            let fm = FileManager()
+            let exists = fm.fileExists(atPath: path)
+            if(exists){
+                let c = fm.contents(atPath: path)
+                let cString = NSString(data: c!, encoding: String.Encoding.utf8.rawValue)
+                let ret = cString! as String
+                let dict = ret.components(separatedBy: "\n")
+                for word in dict{
+                    dictionary.append(word)
+                }
+                print(dictionary.count)
+            }
+}
+        /*textView = String(contentsOfFile: documentsPath,
+                               encoding: NSUTF8StringEncoding,
+                               error: nil)*/
+        /*do{
+            let listener: NSString = try NSString.init(contentsOfFile: filePath, encoding: String.Encoding.utf8.rawValue)
+        }
+        catch
+        {
+            print("didn't work")
+        }*/
+    }
     
     func newGame() -> Array<GameView>
     {
