@@ -72,7 +72,7 @@ class GameView: UIView
         
         let buttonLeave = UIButton(frame: CGRect(x: 25, y: 25, width: 100, height: 20))
         
-        buttonLeave.backgroundColor = .white
+        buttonLeave.backgroundColor = .lightGray
         //buttonEvent.layer.cornerRadius = 5
         buttonLeave.setTitleColor(.black, for: .normal)
         buttonLeave.setTitle("Leave game", for: .normal)

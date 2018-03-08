@@ -22,6 +22,7 @@ class GameModel
     private var gameNumber = 1
     
     private var dictionary : Array<String> = Array()
+    private var wordsPicked : Array<String> = Array()
     
     init()
     {
@@ -44,17 +45,8 @@ class GameModel
                 }
                 print(dictionary.count)
             }
-}
-        /*textView = String(contentsOfFile: documentsPath,
-                               encoding: NSUTF8StringEncoding,
-                               error: nil)*/
-        /*do{
-            let listener: NSString = try NSString.init(contentsOfFile: filePath, encoding: String.Encoding.utf8.rawValue)
         }
-        catch
-        {
-            print("didn't work")
-        }*/
+
     }
     
     func newGame() -> Array<GameView>
@@ -63,7 +55,7 @@ class GameModel
         game.gameIndex = gamesInProgressIndex
         game.gameNumberGetSet = gameNumber
         addWords()
-        let gameBoard = Game(dic: dictionary)
+        let gameBoard = Game(dic: wordsPicked)
         game.theGame = gameBoard
         game.populateBoard()
         gamesInProgress.append(game)
@@ -118,15 +110,38 @@ class GameModel
     
     func addWords()
     {
-        dictionary.removeAll()
-        dictionary.append("unit")
-        dictionary.append("test")
-        dictionary.append("doomsday")
-        dictionary.append("Steve")
-        dictionary.append("Warhead")
-        dictionary.append("XXXXXXXXXXXXX")
-        dictionary.append("123456789")
-        dictionary.append("GREAT")
+        wordsPicked.removeAll()
+        var wordCount = 0
+        while(wordCount < 94)
+        {
+            let Rand = Int(arc4random_uniform(UInt32(dictionary.count)))
+            let newWord = dictionary[Rand]
+            if(wordCount + newWord.count > 94)
+            {
+                //pick new word
+            }
+            else if(wordCount + newWord.count == 93)
+            {
+                //pick new word
+            }
+            else
+            {
+                if(wordsPicked.contains(newWord))
+                {
+                    //pick new word
+                }
+                else
+                {
+                    wordsPicked.append(newWord)
+                    wordCount = wordCount + newWord.count
+                    print(newWord)
+                }
+            }
+            
+            
+            
+        }
+
         
     }
     
