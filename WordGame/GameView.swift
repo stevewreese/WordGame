@@ -68,11 +68,11 @@ class GameView: UIView
     override init(frame: CGRect)
     {
         super.init(frame: frame)
-        self.backgroundColor = .white
+        self.backgroundColor = .lightGray
         
         let buttonLeave = UIButton(frame: CGRect(x: 25, y: 25, width: 100, height: 20))
         
-        buttonLeave.backgroundColor = .lightGray
+        buttonLeave.backgroundColor = .white
         //buttonEvent.layer.cornerRadius = 5
         buttonLeave.setTitleColor(.black, for: .normal)
         buttonLeave.setTitle("Leave game", for: .normal)
@@ -187,8 +187,8 @@ class GameView: UIView
                 let button = GameButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
                 button.setXandy(x: x, y: y)
                 self.addSubview(button)
-                button.backgroundColor = .black
-                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .white
+                button.setTitleColor(.black, for: .normal)
                 //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDown)
                 //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDragEnter)
                 //let tapGesture = UITapGestureRecognizer(target: button, action: Selector("drag"))
