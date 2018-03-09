@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class GameModel
 {
@@ -143,6 +144,26 @@ class GameModel
         }
 
         
+    }
+    
+    func checkWord(buttons: Array<GameButton>, game: Game) -> Bool
+    {
+        var forwardWord = ""
+        var backwardWord = ""
+        for b in buttons
+        {
+            forwardWord = forwardWord + (b.titleLabel?.text)!
+            backwardWord = (b.titleLabel?.text)! + backwardWord
+        }
+        if(dictionary.contains(forwardWord))
+        {
+            return true
+        }
+        else if(dictionary.contains(backwardWord))
+        {
+            return true
+        }
+        return false
     }
     
     

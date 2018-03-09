@@ -74,4 +74,9 @@ class GameControl
         let wingame = theModel?.winGame(game: game)
         delegate?.updateWon(games: wingame!)
     }
+    
+    func checkWord(buttons: Array<GameButton>, game: Game) -> Bool
+    {
+        return theModel!.checkWord(buttons: buttons, game: game)
+    }
 }

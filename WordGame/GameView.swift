@@ -266,7 +266,7 @@ class GameView: UIView
                     {
                         if(b.exited)
                         {
-                            b.backgroundColor = .black
+                            b.backgroundColor = .white
                             b.entered = false
                             b.added = false
                             if let index = wordButtons.index(of: b) {
@@ -422,10 +422,17 @@ class GameView: UIView
                 }
                 
             }
+            var validWord = theControl?.checkWord(buttons: wordButtons, game: theGame!)
             for b1 in wordButtons
             {
                 b1.added = false
-                b1.backgroundColor = .blue
+                if(validWord)!
+                {
+                    b1.backgroundColor = .blue
+                }
+                else{
+                    b1.backgroundColor = .white
+                }
             }
             wordButtons.removeAll()
             theDirection = direction.notSet
