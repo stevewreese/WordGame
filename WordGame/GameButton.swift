@@ -12,9 +12,12 @@ class GameButton: UIButton {
     
     var x = 0.0
     var y = 0.0
+    var xIndex = 0
+    var yIndex = 0
     var entered = false
     var exited = false
     var added = false
+    var color: UIColor = .white
     
     func setXandy(x: Double, y: Double)
     {
