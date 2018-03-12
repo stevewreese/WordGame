@@ -443,12 +443,12 @@ class GameView: UIView
             {
                 b1.added = false
                 b1.entered = false
-                if(validWord)!
+                if(validWord != "")
                 {
                     b1.backgroundColor = .blue
                 }
                 else{
-                    b1.backgroundColor = .white
+                    b1.backgroundColor = b1.color
                 }
             }
             wordButtons.removeAll()

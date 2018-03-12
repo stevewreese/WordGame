@@ -75,7 +75,7 @@ class GameControl
         delegate?.updateWon(games: wingame!)
     }
     
-    func checkWord(buttons: Array<GameButton>, game: Game) -> Bool
+    func checkWord(buttons: Array<GameButton>, game: Game) -> String
     {
         return theModel!.checkWord(buttons: buttons, game: game)
     }
