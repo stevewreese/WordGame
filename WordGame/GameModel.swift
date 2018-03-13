@@ -146,7 +146,7 @@ class GameModel
         
     }
     
-    func checkWord(buttons: Array<GameButton>, game: Game) -> String
+    func checkWord(buttons: Array<GameButton>) -> Bool
     {
         var forwardWord = ""
         var backwardWord = ""
@@ -157,13 +157,13 @@ class GameModel
         }
         if(dictionary.contains(forwardWord))
         {
-            return forwardWord
+            return true
         }
         else if(dictionary.contains(backwardWord))
         {
-            return backwardWord
+            return true
         }
-        return ""
+        return false
     }
     
     

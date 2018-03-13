@@ -438,19 +438,19 @@ class GameView: UIView
                 }
                 
             }
-            var validWord = theControl?.checkWord(buttons: wordButtons, game: theGame!)
+            let validWord = theControl?.checkWord(buttons: wordButtons)
             for b1 in wordButtons
             {
                 b1.added = false
                 b1.entered = false
-                if(validWord != "")
-                {
-                    b1.backgroundColor = .blue
-                }
-                else{
-                    b1.backgroundColor = b1.color
-                }
+                b1.backgroundColor = b1.color
             }
+            if(validWord)!
+            {
+                theGame?.changeBoard(buttons: wordButtons)
+                populateBoard()
+            }
+            
             wordButtons.removeAll()
             theDirection = direction.notSet
         }

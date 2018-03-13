@@ -44,11 +44,11 @@ class Game{
                         lookingForIndex = false
                     }
                 }
-                var row = (index/9)
-                var col = index%9
+                let row = (index/9)
+                let col = index%9
                 var lookingForDirection = true
                 var dicIndex = Int(arc4random_uniform(UInt32(8)))
-                var middle = dicIndex - 1
+                let middle = dicIndex - 1
                 var goingUp = true
                 while(lookingForDirection)
                 {
@@ -448,6 +448,21 @@ class Game{
                 indexes.remove(at: index)
             }
             i = i + 1
+        }
+    }
+    
+    func changeBoard(buttons: Array<GameButton>)
+    {
+        for b in buttons
+        {
+            var x = b.xIndex
+            var y = b.yIndex
+            while(y > 0)
+            {
+                board[y][x] = board[y - 1][x]
+                y = y - 1
+            }
+            board[0][x] = "?"
         }
     }
 
