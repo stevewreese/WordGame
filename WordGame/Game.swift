@@ -46,33 +46,9 @@ class Game{
                 }
                 let row = (index/9)
                 let col = index%9
-                var lookingForDirection = true
-                var dicIndex = Int(arc4random_uniform(UInt32(8)))
-                let middle = dicIndex - 1
-                var goingUp = true
-                while(lookingForDirection)
-                {
-                    
-                    indexSuccess = setWord(direction: direction[dicIndex], row: row, col: col, word: word)
-                    lookingForDirection = !indexSuccess
-                    if(goingUp)
-                    {
-                        dicIndex = dicIndex + 1
-                    }
-                    else{
-                        dicIndex = dicIndex - 1
-                    }
-                    if(dicIndex > 7)
-                    {
-                        goingUp = false
-                        dicIndex = middle
-                    }
-                    if(dicIndex < 0)
-                    {
-                        lookingForDirection = false
-                    }
+
+                indexSuccess = setWord(row: row, col: col, word: word)
     
-                }
                 if(indexSuccess)
                 {
                     looking = false
@@ -102,312 +78,264 @@ class Game{
         }
     }
     
-    func setWord(direction: String, row: Int, col: Int, word: String) -> Bool
+    func setWord(row: Int, col: Int, word: String) -> Bool
     {
         var nextRow = row
         var nextCol = col
+        var usedIndexes: Array<Int> = Array()
         var theIndexes:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: word.count)
-        switch(direction)
+        var index = 0
+        if(board[nextRow][nextCol] == "?")
         {
-            case "n" :
-                //if word is too big to go north on the board pick new direction
-                if(row + 1 < word.count)
+            theIndexes[index][0] = nextRow
+            theIndexes[index][1] = nextCol
+            usedIndexes.append(nextRow*9 + nextCol)
+            
+        }
+        else
+        {
+            return false
+        }
+        index = index + 1
+        while(index < word.count)
+        {
+                var dicIndex = Int(arc4random_uniform(UInt32(8)))
+                let middle = dicIndex - 1
+                var goingUp = true
+                while(true)
                 {
-                    return false
-                }
-                var i = 0
-                //see if word can be placed
-                while(i < word.count)
-                {
-                    //if a letter is alreading in that place pick a new direction
-                    if(board[nextRow][nextCol] == "")
+                    var placedWord = false
+                    var direct = direction[dicIndex]
+                    switch(direct)
                     {
-                        theIndexes[i][0] = nextRow
-                        theIndexes[i][1] = nextCol
-                        nextRow = nextRow - 1
+                    case "n" :
+                        if((nextRow - 1) < 0)
+                        {
+                            placedWord = false
+                        }
+                        else{
+                            if(board[nextRow - 1][nextCol] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol))
+                            {
+                                nextRow = nextRow - 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+   
+                        
+                        break
+                    case "ne" :
+                        if((nextRow - 1) < 0 || (nextCol + 1) > 8)
+                        {
+                            placedWord = false
+                        }
+                        else{
+                            if(board[nextRow - 1][nextCol + 1] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol + 1))
+                            {
+                                nextRow = nextRow - 1
+                                nextCol = nextCol + 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "e" :
+                        if((nextCol + 1) > 8)
+                        {
+                            placedWord = false
+                        }
+                        else
+                        {
+                            if(board[nextRow][nextCol + 1] == "?" && !usedIndexes.contains((nextRow)*9 + nextCol + 1))
+                            {
+                                nextCol = nextCol + 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "se" :
+                        if((nextRow + 1) > 11 || (nextCol + 1) > 8)
+                        {
+                            placedWord = false
+                        }
+                        else{
+                            if(board[nextRow + 1][nextCol + 1] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol + 1))
+                            {
+                                nextRow = nextRow + 1
+                                nextCol = nextCol + 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "s" :
+                        if((nextRow + 1) > 11)
+                        {
+                            placedWord = false
+                        }
+                        else{
+                            if(board[nextRow + 1][nextCol] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol))
+                            {
+                                nextRow = nextRow + 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "sw" :
+                        if((nextRow + 1) > 11 || (nextCol - 1) < 0)
+                        {
+                            placedWord = false
+                        }
+                        else
+                        {
+                            if(board[nextRow + 1][nextCol - 1] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol - 1))
+                            {
+                                nextRow = nextRow + 1
+                                nextCol = nextCol - 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "w" :
+                        if((nextCol - 1) < 0)
+                        {
+                            placedWord = false
+                        }
+                        else
+                        {
+                            if(board[nextRow][nextCol - 1] == "?" && !usedIndexes.contains((nextRow)*9 + nextCol - 1))
+                            {
+                                nextCol = nextCol - 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    case "nw" :
+                        if((nextRow - 1) < 0 || (nextCol - 1) < 0)
+                        {
+                            placedWord = false
+                        }
+                        else{
+                            if(board[nextRow - 1][nextCol - 1] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol - 1))
+                            {
+                                nextRow = nextRow - 1
+                                nextCol = nextCol - 1
+                                theIndexes[index][0] = nextRow
+                                theIndexes[index][1] = nextCol
+                                usedIndexes.append(nextRow*9 + nextCol)
+                                placedWord = true
+                            }
+                            else
+                            {
+                                placedWord = false
+                            }
+                        }
+                        
+                        
+                        break
+                    default:
+                        return false
+                    }
+                    if(!placedWord)
+                    {
+                        if(goingUp)
+                        {
+                            dicIndex = dicIndex + 1
+                        }
+                        else{
+                            dicIndex = dicIndex - 1
+                        }
+                        if(dicIndex > 7)
+                        {
+                            goingUp = false
+                            dicIndex = middle
+                        }
+                        if(dicIndex < 0)
+                        {
+                            return false
+                        }
                     }
                     else
                     {
-                        return false
+                        break
                     }
-                    i = i + 1
+                    
                 }
-                //place the letters
-                var j = 0
-                for aChar in word
-                {
-                    board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                    //remove possible index from the list of indexes
-                    var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                    if let index = indexes.index(of: aIndex) {
-                        indexes.remove(at: index)
-                    }
-                    j = j + 1
-                }
-                return true
-                break
-        case "ne" :
-            //if word is too big to go north on the board pick new direction
-            if(row + 1 < word.count || (9 - col) < word.count)
-            {
-                return false
+            index = index + 1
             }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextRow = nextRow - 1
-                    nextCol = nextCol + 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
+        var j = 0;
+        for aChar in word
+        {
+            board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
+            //remove possible index from the list of indexes
+            let aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
+            if let index = indexes.index(of: aIndex) {
+                indexes.remove(at: index)
             }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-            break
-        case "e" :
-            //if word is too big to go north on the board pick new direction
-            if((9 - col) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextCol = nextCol + 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-            break
-        case "se" :
-            //if word is too big to go Sout east on the board pick new direction
-            if((12 - row) < word.count || (9 - col) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextRow = nextRow + 1
-                    nextCol = nextCol + 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-        case "s" :
-            //if word is too big to go South on the board pick new direction
-            if((12 - row) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextRow = nextRow + 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-        case "sw" :
-            //if word is too big to go South west on the board pick new direction
-            if((row + 1) < word.count || (col + 1) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextRow = nextRow - 1
-                    nextCol = nextCol - 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-        case "w" :
-            //if word is too big to go Sout east on the board pick new direction
-            if((col + 1) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextCol = nextCol - 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                let aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-        case "nw" :
-            //if word is too big to go north west on the board pick new direction
-            if((row + 1) < word.count || (col + 1) < word.count)
-            {
-                return false
-            }
-            var i = 0
-            //see if word can be placed
-            while(i < word.count)
-            {
-                //if a letter is alreading in that place pick a new direction
-                if(board[nextRow][nextCol] == "")
-                {
-                    theIndexes[i][0] = nextRow
-                    theIndexes[i][1] = nextCol
-                    nextRow = nextRow - 1
-                    nextCol = nextCol - 1
-                }
-                else
-                {
-                    return false
-                }
-                i = i + 1
-            }
-            //place the letters
-            var j = 0
-            for aChar in word
-            {
-                board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
-                //remove possible index from the list of indexes
-                var aIndex = theIndexes[j][0] * 9 + theIndexes[j][1]
-                if let index = indexes.index(of: aIndex) {
-                    indexes.remove(at: index)
-                }
-                j = j + 1
-            }
-            return true
-            default:
-                return false
+            j = j + 1
         }
-    }
+        return true;
+            
+        }
+  
     
     func setLetters()
     {

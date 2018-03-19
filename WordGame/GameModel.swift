@@ -111,6 +111,9 @@ class GameModel
     
     func addWords()
     {
+        /*wordsPicked.removeAll()
+        var testWord = "0123456789"
+        wordsPicked.append(testWord)*/
         wordsPicked.removeAll()
         var wordCount = 0
         while(wordCount < 94)
