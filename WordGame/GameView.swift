@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Foundation
 
 class GameView: UIView
 {
@@ -220,55 +221,14 @@ class GameView: UIView
             let point: CGPoint = (touches.first?.location(in: board))!
             for b in buttons
             {
-                if(b.backgroundColor == .blue || b.titleLabel?.text == "?")
+                if(b.titleLabel?.text == "?")
                 {
                     
                 }
                 else
                 {
                     let pointB = CGPoint(x: b.x, y: b.y)
-                    if(wordButtons.count == 1 && theDirection != direction.notSet)
-                    {
-                        theDirection = direction.notSet
-                    }
-                    if(theDirection == direction.notSet)
-                    {
-                        if(wordButtons.count == 2)
-                        {
-                            if(wordButtons[0].xIndex == wordButtons[1].xIndex - 1 && wordButtons[0].yIndex == wordButtons[1].yIndex)
-                            {
-                                theDirection = direction.e
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex + 1 && wordButtons[0].yIndex == wordButtons[1].yIndex)
-                            {
-                                theDirection = direction.w
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex && wordButtons[0].yIndex == wordButtons[1].yIndex + 1)
-                            {
-                                theDirection = direction.n
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex && wordButtons[0].yIndex == wordButtons[1].yIndex - 1)
-                            {
-                                theDirection = direction.s
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex - 1 && wordButtons[0].yIndex == wordButtons[1].yIndex + 1)
-                            {
-                                theDirection = direction.ne
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex + 1 && wordButtons[0].yIndex == wordButtons[1].yIndex + 1)
-                            {
-                                theDirection = direction.nw
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex - 1 && wordButtons[0].yIndex == wordButtons[1].yIndex - 1)
-                            {
-                                theDirection = direction.se
-                            }
-                            else if(wordButtons[0].xIndex == wordButtons[1].xIndex + 1 && wordButtons[0].yIndex == wordButtons[1].yIndex - 1)
-                            {
-                                theDirection = direction.sw
-                            }
-                        }
-                    }
+             
                     if((point.x >= pointB.x && point.x <= pointB.x + 40)&&(point.y >= pointB.y && point.y <= pointB.y + 40))
                     {
                         if(b.entered)
@@ -286,60 +246,28 @@ class GameView: UIView
                                     indexEnd = indexEnd - 1
                                 }
                             }
-                            
-                            
-                        }
-                        else{
-                            if(theDirection != direction.notSet)
+                            if(theControl?.checkWord(buttons: wordButtons))!
                             {
-                                var fingerDirection = direction.notSet
-                                if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex - 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex)
+                                for b1 in wordButtons
                                 {
-                                    fingerDirection = direction.e
+                                    b1.backgroundColor = .green
                                 }
-                                else if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex + 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex)
+                            }
+                            else
+                            {
+                                for b1 in wordButtons
                                 {
-                                    fingerDirection = direction.w
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex && wordButtons[wordButtons.count - 1].yIndex == b.yIndex + 1)
-                                {
-                                    fingerDirection = direction.n
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex && wordButtons[wordButtons.count - 1].yIndex == b.yIndex - 1)
-                                {
-                                    fingerDirection = direction.s
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex  == b.xIndex - 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex + 1)
-                                {
-                                    fingerDirection = direction.ne
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex + 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex + 1)
-                                {
-                                    fingerDirection = direction.nw
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex == b.xIndex - 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex - 1)
-                                {
-                                    fingerDirection = direction.se
-                                }
-                                else if(wordButtons[wordButtons.count - 1].xIndex  == b.xIndex + 1 && wordButtons[wordButtons.count - 1].yIndex == b.yIndex - 1)
-                                {
-                                    fingerDirection = direction.sw
-                                }
-                                
-                                if(fingerDirection == theDirection)
-                                {
-                                    b.backgroundColor = .cyan
-                                    b.entered = true
-                                    if(!b.added)
-                                    {
-                                        b.added = true
-                                        wordButtons.append(b)
-                                        
-                                    }
+                                    b1.backgroundColor = .cyan
                                 }
                                 
                             }
-                            else
+                            
+                            
+                        }
+                        else
+                        {
+                            
+                            if(borderingButton(button: b))
                             {
                                 b.backgroundColor = .cyan
                                 b.entered = true
@@ -347,11 +275,27 @@ class GameView: UIView
                                 {
                                     b.added = true
                                     wordButtons.append(b)
-                                    
                                 }
                             }
                             
+                            if(theControl?.checkWord(buttons: wordButtons))!
+                            {
+                                for b1 in wordButtons
+                                {
+                                    b1.backgroundColor = .green
+                                }
+                            }
+                            else
+                            {
+                                for b1 in wordButtons
+                                {
+                                    b1.backgroundColor = .cyan
+                                }
+                                
+                            }
+                                
                         }
+                        
                     }
                     else
                     {
@@ -379,7 +323,7 @@ class GameView: UIView
             let point: CGPoint = (touches.first?.location(in: board))!
             for b in buttons
             {
-                if(b.backgroundColor == .blue || b.titleLabel?.text == "?")
+                if(b.titleLabel?.text == "?")
                 {
                     
                 }
@@ -481,4 +425,45 @@ class GameView: UIView
             i = i + 1
         }
     }
+    
+    func borderingButton(button: GameButton) -> Bool
+    {
+        if(button.xIndex == wordButtons.last?.xIndex && button.yIndex + 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex - 1 == wordButtons.last?.xIndex  && button.yIndex == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex + 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex - 1 == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else if(button.xIndex - 1 == wordButtons.last?.xIndex  && button.yIndex + 1 == wordButtons.last?.yIndex)
+        {
+            return true
+        }
+        else
+        {
+            return false
+        }
+    }
+    
 }
