@@ -381,17 +381,45 @@ class Game{
     
     func changeBoard(buttons: Array<GameButton>)
     {
+        var buttonList: Array<GameButton> = Array()
         for b in buttons
         {
-            var x = b.xIndex
-            var y = b.yIndex
-            while(y > 0)
+            if(buttonList.count == 0)
             {
-                board[y][x] = board[y - 1][x]
-                y = y - 1
+                buttonList.append(b)
             }
-            board[0][x] = "?"
+            else{
+                var i = 0
+                var inserted = false
+                while(i < buttonList.count)
+                {
+                    if(buttonList[i].yIndex > b.yIndex)
+                    {
+                        buttonList.insert(b, at: i)
+                        i = buttonList.count
+                        inserted = true
+                    }
+                    i = i + 1
+                }
+                if(!inserted)
+                {
+                    buttonList.append(b)
+                }
+            }
+            
         }
+        for b2 in buttonList
+        {
+             let col = b2.xIndex
+             var row = b2.yIndex
+             while(row > 0)
+             {
+             board[row][col] = board[row - 1][col]
+             row = row - 1
+             }
+             board[0][col] = "?"
+        }
+        
     }
 
     

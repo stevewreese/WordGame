@@ -396,7 +396,6 @@ class GameView: UIView
             }
             
             wordButtons.removeAll()
-            theDirection = direction.notSet
         }
 
 
