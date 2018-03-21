@@ -17,6 +17,8 @@ class Game{
     var alphabet: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     var specialIndex:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: 4)
     
+    var score = 100
+    
     init(dic: Array<String>)
     {
         dictionary = dic
@@ -381,39 +383,65 @@ class Game{
     
     func checkBlank(buttonsList: Array<GameButton>, button: GameButton) -> Int
     {
-        if(button.xIndex - 1 >= 0)
+        if(button.col - 1 >= 0)
         {
-            if(board[button.yIndex][button.xIndex - 1] == "?")
+            if(board[button.row][button.col - 1] == "?")
             {
-                return button.yIndex * 9 + button.xIndex - 1
+                checkforRed(button: button)
+                return button.row * 9 + button.col - 1
             }
             
         }
-        if(button.xIndex + 1 < 9)
+        if(button.col + 1 < 9)
         {
-            if(board[button.yIndex][button.xIndex + 1] == "?")
+            if(board[button.row][button.col + 1] == "?")
             {
-                return button.yIndex * 9 + button.xIndex + 1
+                checkforRed(button: button)
+                return button.row * 9 + button.col + 1
             }
             
         }
-        if(button.yIndex - 1 >= 0)
+        if(button.row - 1 >= 0)
         {
-            if(board[button.yIndex - 1][button.xIndex] == "?")
+            if(board[button.row - 1][button.col] == "?")
             {
-                return (button.yIndex - 1) * 9 + button.xIndex
+                checkforRed(button: button)
+                return (button.row - 1) * 9 + button.col
             }
             
         }
-        if(button.yIndex + 1 < 12)
+        if(button.row + 1 < 12)
         {
-            if(board[button.yIndex + 1][button.xIndex] == "?")
+            if(board[button.row + 1][button.col] == "?")
             {
-                return (button.yIndex + 1) * 9 + button.xIndex
+                checkforRed(button: button)
+                return (button.row + 1) * 9 + button.col
             }
             
         }
         return -1
+    }
+    
+    func checkforRed(button: GameButton) -> Int
+    {
+        var i = 0
+        var result = -1
+        while(i < specialIndex.count)
+        {
+            if(specialIndex[i][1] == button.col && specialIndex[i][0] == button.row)
+            {
+                result = button.row * 9
+                specialIndex[i][1] = -1
+                specialIndex[i][0] = -1
+            }
+            else if(specialIndex[i][1] == button.col && specialIndex[i][0] < button.row)
+            {
+                specialIndex[i][0] = specialIndex[i][0] + 1
+            }
+            i = i + 1
+        }
+        return result
+        
     }
     
     func changeBoard(buttons: Array<GameButton>, fullList: Array<GameButton>)
@@ -421,6 +449,42 @@ class Game{
         var buttonList: Array<GameButton> = Array()
         for b in buttons
         {
+            let redRow = checkforRed(button: b)
+            if(redRow != -1)
+            {
+                var redCol = 0
+                while(redCol < 9)
+                {
+                    checkforRed(button: fullList[redRow + redCol])
+                    if(!buttonList.contains(fullList[redRow + redCol]))
+                    {
+                        if(buttonList.count == 0)
+                        {
+                            buttonList.append(fullList[redRow + redCol])
+                        }
+                        else{
+                            var i = 0
+                            var inserted = false
+                            while(i < buttonList.count)
+                            {
+                                if(buttonList[i].row > fullList[redRow + redCol].row)
+                                {
+                                    buttonList.insert(fullList[redRow + redCol], at: i)
+                                    i = buttonList.count
+                                    inserted = true
+                                }
+                                i = i + 1
+                            }
+                            if(!inserted)
+                            {
+                                buttonList.append(fullList[redRow + redCol])
+                            }
+                            
+                        }
+                    }
+                    redCol = redCol + 1
+                }
+            }
             let blankindex: Int = checkBlank(buttonsList: buttons, button: b)
             if(blankindex != -1)
             {
@@ -435,7 +499,7 @@ class Game{
                         var inserted = false
                         while(i < buttonList.count)
                         {
-                            if(buttonList[i].yIndex > fullList[blankindex].yIndex)
+                            if(buttonList[i].row > fullList[blankindex].row)
                             {
                                 buttonList.insert(fullList[blankindex], at: i)
                                 i = buttonList.count
@@ -461,7 +525,7 @@ class Game{
                 var inserted = false
                 while(i < buttonList.count)
                 {
-                    if(buttonList[i].yIndex > b.yIndex)
+                    if(buttonList[i].row > b.row)
                     {
                         buttonList.insert(b, at: i)
                         i = buttonList.count
@@ -478,14 +542,20 @@ class Game{
         }
         for b2 in buttonList
         {
-             let col = b2.xIndex
-             var row = b2.yIndex
+             var col = b2.col
+             var row = b2.row
              while(row > 0)
              {
-             board[row][col] = board[row - 1][col]
-             row = row - 1
+                board[row][col] = board[row - 1][col]
+                row = row - 1
              }
              board[0][col] = "?"
+            if(b2.titleLabel?.text != "?")
+            {
+                print("\(b2.titleLabel?.text)")
+                score = score - 1
+            }
+            
         }
         
         

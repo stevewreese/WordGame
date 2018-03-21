@@ -187,8 +187,8 @@ class GameView: UIView
             {
                 let button = GameButton(frame: CGRect(x: x, y: y, width: 40, height: 40))
                 button.setXandy(x: x, y: y)
-                button.xIndex = i
-                button.yIndex = j
+                button.col = i
+                button.row = j
                 self.addSubview(button)
                 button.backgroundColor = .white
                 button.setTitleColor(.black, for: .normal)
@@ -410,52 +410,61 @@ class GameView: UIView
             var j = 0
             while(j < 9)
             {
+                var isRed = false
                 for theSpecInd in (theGame?.specialIndex)!
                 {
                     if(theSpecInd[0] == i && theSpecInd[1] == j)
                     {
                         buttons[i*9 + j].backgroundColor = .red
                         buttons[i*9 + j].color = .red
+                        isRed = true
                     }
                 }
                 buttons[i*9 + j].setTitle(theGame?.board[i][j], for: .normal)
+                if(!isRed)
+                {
+                    buttons[i*9 + j].backgroundColor = .white
+                    buttons[i*9 + j].color = .white
+                }
+                
                 j = j + 1
             }
             i = i + 1
         }
+        print("the score is \(theGame?.score)")
     }
     
     func borderingButton(button: GameButton) -> Bool
     {
-        if(button.xIndex == wordButtons.last?.xIndex && button.yIndex + 1 == wordButtons.last?.yIndex)
+        if(button.row == wordButtons.last?.row && button.col + 1 == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        else if(button.row == wordButtons.last?.row && button.col - 1 == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex == wordButtons.last?.yIndex)
+        else if(button.row + 1 == wordButtons.last?.row && button.col == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex - 1 == wordButtons.last?.xIndex  && button.yIndex == wordButtons.last?.yIndex)
+        else if(button.row - 1 == wordButtons.last?.row  && button.col == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        else if(button.row + 1 == wordButtons.last?.row && button.col - 1 == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex + 1 == wordButtons.last?.xIndex && button.yIndex + 1 == wordButtons.last?.yIndex)
+        else if(button.row + 1 == wordButtons.last?.row && button.col + 1 == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex - 1 == wordButtons.last?.xIndex && button.yIndex - 1 == wordButtons.last?.yIndex)
+        else if(button.row - 1 == wordButtons.last?.row && button.col - 1 == wordButtons.last?.col)
         {
             return true
         }
-        else if(button.xIndex - 1 == wordButtons.last?.xIndex  && button.yIndex + 1 == wordButtons.last?.yIndex)
+        else if(button.row - 1 == wordButtons.last?.row  && button.col + 1 == wordButtons.last?.col)
         {
             return true
         }

@@ -12,8 +12,8 @@ class GameButton: UIButton {
     
     var x = 0.0
     var y = 0.0
-    var xIndex = 0
-    var yIndex = 0
+    var row = 0
+    var col = 0
     var entered = false
     var exited = false
     var added = false

@@ -44,7 +44,7 @@ class GameModel
                 for word in dict{
                     dictionary.append(word)
                 }
-                print(dictionary.count)
+                //print(dictionary.count)
             }
         }
 
@@ -138,7 +138,7 @@ class GameModel
                 {
                     wordsPicked.append(newWord)
                     wordCount = wordCount + newWord.count
-                    print(newWord)
+                    //print(newWord)
                 }
             }
             
