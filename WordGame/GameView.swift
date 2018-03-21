@@ -391,7 +391,7 @@ class GameView: UIView
             }
             if(validWord)!
             {
-                theGame?.changeBoard(buttons: wordButtons)
+                theGame?.changeBoard(buttons: wordButtons, fullList: buttons)
                 populateBoard()
             }
             

@@ -379,11 +379,79 @@ class Game{
         }
     }
     
-    func changeBoard(buttons: Array<GameButton>)
+    func checkBlank(buttonsList: Array<GameButton>, button: GameButton) -> Int
+    {
+        if(button.xIndex - 1 >= 0)
+        {
+            if(board[button.yIndex][button.xIndex - 1] == "?")
+            {
+                return button.yIndex * 9 + button.xIndex - 1
+            }
+            
+        }
+        if(button.xIndex + 1 < 9)
+        {
+            if(board[button.yIndex][button.xIndex + 1] == "?")
+            {
+                return button.yIndex * 9 + button.xIndex + 1
+            }
+            
+        }
+        if(button.yIndex - 1 >= 0)
+        {
+            if(board[button.yIndex - 1][button.xIndex] == "?")
+            {
+                return (button.yIndex - 1) * 9 + button.xIndex
+            }
+            
+        }
+        if(button.yIndex + 1 < 12)
+        {
+            if(board[button.yIndex + 1][button.xIndex] == "?")
+            {
+                return (button.yIndex + 1) * 9 + button.xIndex
+            }
+            
+        }
+        return -1
+    }
+    
+    func changeBoard(buttons: Array<GameButton>, fullList: Array<GameButton>)
     {
         var buttonList: Array<GameButton> = Array()
         for b in buttons
         {
+            let blankindex: Int = checkBlank(buttonsList: buttons, button: b)
+            if(blankindex != -1)
+            {
+                if(!buttonList.contains(fullList[blankindex]))
+                {
+                    if(buttonList.count == 0)
+                    {
+                        buttonList.append(fullList[blankindex])
+                    }
+                    else{
+                        var i = 0
+                        var inserted = false
+                        while(i < buttonList.count)
+                        {
+                            if(buttonList[i].yIndex > fullList[blankindex].yIndex)
+                            {
+                                buttonList.insert(fullList[blankindex], at: i)
+                                i = buttonList.count
+                                inserted = true
+                            }
+                            i = i + 1
+                        }
+                        if(!inserted)
+                        {
+                            buttonList.append(fullList[blankindex])
+                        }
+                        
+                    }
+                }
+                
+            }
             if(buttonList.count == 0)
             {
                 buttonList.append(b)
@@ -419,6 +487,7 @@ class Game{
              }
              board[0][col] = "?"
         }
+        
         
     }
 
