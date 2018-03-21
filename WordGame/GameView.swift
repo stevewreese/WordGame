@@ -235,7 +235,7 @@ class GameView: UIView
                         {
                             let index = wordButtons.index(of: b)
                             var indexEnd = wordButtons.count - 1
-                            if(index != nil)
+                            if(index == wordButtons.count - 2)
                             {
                                 while(index! < indexEnd)
                                 {

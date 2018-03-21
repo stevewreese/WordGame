@@ -105,7 +105,7 @@ class Game{
                 while(true)
                 {
                     var placedWord = false
-                    var direct = direction[dicIndex]
+                    let direct = direction[dicIndex]
                     switch(direct)
                     {
                     case "n" :
