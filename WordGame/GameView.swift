@@ -16,18 +16,16 @@ class GameView: UIView
 
     var theGame: Game? = nil
     
-    
     var board = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 736))
+    var gameWon = UIView(frame: CGRect(x: 0, y: 0, width: 414, height: 736))
     let buttonEnd = UIButton(frame: CGRect(x: 225, y: 25, width: 100, height: 20))
-    let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
+    //let buttonWon = UIButton(frame: CGRect(x: 125, y: 25, width: 100, height: 20))
     //see the if the game is inprogress ended by player or won
     enum state {case progress, ended, won}
     enum direction{case notSet, n, ne, e, se, s, sw, w, nw}
     var theDirection = direction.notSet
     private var theState = state.progress
-    var lastPoint: CGPoint = CGPoint(x: -1000, y: -1000)
-    
-    
+
     var getState: state{
         get{
             return theState
@@ -91,13 +89,13 @@ class GameView: UIView
         
         board.addSubview(buttonEnd)
         
-        buttonWon.backgroundColor = .white
+        /*buttonWon.backgroundColor = .white
         //buttonEvent.layer.cornerRadius = 5
         buttonWon.setTitleColor(.black, for: .normal)
         buttonWon.setTitle("Win game", for: .normal)
         buttonWon.addTarget(self, action: #selector(GameView.win(sender:)), for: .touchUpInside)
         
-        board.addSubview(buttonWon)
+        board.addSubview(buttonWon)*/
         
         makeBoard()
         
@@ -150,13 +148,10 @@ class GameView: UIView
     
     @objc func win(sender: UIButton!)
     {
-        if(theState == state.ended || theState == state.won)
-        {
-        }
-        else
-        {
-            theControl?.winGame(game: self)
-        }
+
+        gameWon.removeFromSuperview()
+        theControl?.winGame(game: self)
+
         
     }
     
@@ -164,14 +159,14 @@ class GameView: UIView
     {
         theState = state.ended
         buttonEnd.backgroundColor = .gray
-        buttonWon.backgroundColor = .gray
+        //buttonWon.backgroundColor = .gray
     }
     
     func winState()
     {
         theState = state.won
         buttonEnd.backgroundColor = .gray
-        buttonWon.backgroundColor = .gray
+        //buttonWon.backgroundColor = .gray
     }
     
     func makeBoard()
@@ -193,9 +188,6 @@ class GameView: UIView
                 button.backgroundColor = .white
                 button.setTitleColor(.black, for: .normal)
                 button.setTitle(" ", for: .normal)
-                //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDown)
-                //button.addTarget(self, action: #selector(GameView.select(sender:)), for: .touchDragEnter)
-                //let tapGesture = UITapGestureRecognizer(target: button, action: Selector("drag"))
                 buttons.append(button)
                 x = x + 45.4
                 
@@ -216,8 +208,6 @@ class GameView: UIView
         if(theState == state.progress)
         {
             
-            
-            // bug of missed highlighted buttons
             let point: CGPoint = (touches.first?.location(in: board))!
             for b in buttons
             {
@@ -393,6 +383,24 @@ class GameView: UIView
             {
                 theGame?.changeBoard(buttons: wordButtons, fullList: buttons)
                 populateBoard()
+                if(theGame?.score == 0)
+                {
+                    print("Game Won")
+                    gameWon.backgroundColor = .white
+                    var label = UILabel(frame: CGRect(x: 150, y: 300, width: 225, height: 40))
+                    label.text = "Game Won!"
+                    gameWon.addSubview(label)
+                    let buttonDismiss = UIButton(frame: CGRect(x: 50, y: 400, width: 100, height: 20))
+                    buttonDismiss.backgroundColor = .gray
+                    //buttonEvent.layer.cornerRadius = 5
+                    buttonDismiss.setTitleColor(.black, for: .normal)
+                    buttonDismiss.setTitle("OK", for: .normal)
+                    buttonDismiss.addTarget(self, action: #selector(GameView.win(sender:)), for: .touchUpInside)
+                    gameWon.addSubview(buttonDismiss)
+                    addSubview(gameWon)
+                    theState = state.won
+                    
+                }
             }
             
             wordButtons.removeAll()
@@ -431,7 +439,7 @@ class GameView: UIView
             }
             i = i + 1
         }
-        print("the score is \(theGame?.score)")
+        
     }
     
     func borderingButton(button: GameButton) -> Bool
@@ -472,6 +480,11 @@ class GameView: UIView
         {
             return false
         }
+    }
+    
+    func getScore() ->Int
+    {
+        return (theGame?.score)!
     }
     
 }

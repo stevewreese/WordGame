@@ -48,6 +48,7 @@ class ViewHolder: UIView, ControlDelegate
     func leavegame(game: GameView)
     {
         game.removeFromSuperview()
+        gameCollector.reload()
         self.addSubview(gameCollector)
     }
     
@@ -59,14 +60,14 @@ class ViewHolder: UIView, ControlDelegate
     }
     
     //when player end the game prematurely this delegat is called and the gaem collection view is updated
-    func updateEnded(games: Array<GameView>)
+    func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>)
     {
-        gameCollector.updateEnded(games: games)
+        gameCollector.updateEnded(games: games, gamesProg: gamesProg)
     }
     
     //when player wins the game this delegate is called and the gaem collection view is updated
-    func updateWon(games: Array<GameView>)
+    func updateWon(games: Array<GameView>, gamesProg: Array<GameView>)
     {
-        gameCollector.updateWon(games: games)
+        gameCollector.updateWon(games: games, gamesProg: gamesProg)
     }
 }

@@ -93,16 +93,16 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         if(indexPath.section == 0)
         {
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameNumberGetSet)"
+            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameNumberGetSet) Score: \(100 - gamesInProgress[indexPath.row].getScore())/98"
         }
         else if(indexPath.section == 1)
         {
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesEnded[indexPath.row].gameNumberGetSet)"
+            cell.textLabel!.text = "Game \(gamesEnded[indexPath.row].gameNumberGetSet) Score: \(100 - gamesEnded[indexPath.row].getScore())/98"
         }
         else{
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesWon[indexPath.row].gameNumberGetSet)"
+            cell.textLabel!.text = "Game \(gamesWon[indexPath.row].gameNumberGetSet) Score: \(100 - gamesWon[indexPath.row].getScore())/98"
         }
         
         return cell!
@@ -148,22 +148,25 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         
     }
  
-    func updateEnded(games: Array<GameView>) {
+    func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>) {
         gamesEnded = games
-        if let index = gamesInProgress.index(of: games[games.count - 1]) {
-            gamesInProgress.remove(at: index)
-        }
+        //if let index = gamesInProgress.index(of: games[games.count - 1]) {
+        gamesInProgress = gamesProg
+        //}
         gameTable.reloadData()
         theControl?.leaveGame(game: gamesEnded[games.count - 1])
     }
     
-    func updateWon(games: Array<GameView>) {
+    func updateWon(games: Array<GameView>, gamesProg: Array<GameView>) {
         gamesWon = games
-        if let index = gamesInProgress.index(of: games[games.count - 1]) {
-            gamesInProgress.remove(at: index)
-        }
+        gamesInProgress = gamesProg
         gameTable.reloadData()
         theControl?.leaveGame(game: gamesWon[games.count - 1])
+    }
+    
+    func reload()
+    {
+        gameTable.reloadData()
     }
     
     

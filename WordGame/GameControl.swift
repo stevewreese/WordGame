@@ -14,8 +14,8 @@ protocol ControlDelegate: class
     func makeNewGame(game: GameView)
     func leavegame(game: GameView)
     func addGame(game: GameView)
-    func updateEnded(games: Array<GameView>)
-    func updateWon(games: Array<GameView>)
+    func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>)
+    func updateWon(games: Array<GameView>, gamesProg: Array<GameView>)
     
 }
 
@@ -47,7 +47,7 @@ class GameControl
     func endGame(game: GameView)
     {
         let endgame = theModel?.endGame(game: game)
-        delegate?.updateEnded(games: endgame!)
+        delegate?.updateEnded(games: (endgame?.gameEndList)!, gamesProg: (endgame?.gameProgList)!)
         //delegate?.leavegame(game: endgame![(endgame?.count)! - 1])
         
     }
@@ -72,7 +72,7 @@ class GameControl
     func winGame(game: GameView)
     {
         let wingame = theModel?.winGame(game: game)
-        delegate?.updateWon(games: wingame!)
+        delegate?.updateWon(games: wingame!.gameEndList!, gamesProg: wingame!.gameProgList!)
     }
     
     func checkWord(buttons: Array<GameButton>) -> Bool

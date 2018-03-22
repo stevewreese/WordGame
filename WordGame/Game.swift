@@ -521,22 +521,26 @@ class Game{
                 buttonList.append(b)
             }
             else{
-                var i = 0
-                var inserted = false
-                while(i < buttonList.count)
+                if(!buttonList.contains(b))
                 {
-                    if(buttonList[i].row > b.row)
+                    var i = 0
+                    var inserted = false
+                    while(i < buttonList.count)
                     {
-                        buttonList.insert(b, at: i)
-                        i = buttonList.count
-                        inserted = true
+                        if(buttonList[i].row > b.row)
+                        {
+                            buttonList.insert(b, at: i)
+                            i = buttonList.count
+                            inserted = true
+                        }
+                        i = i + 1
                     }
-                    i = i + 1
+                    if(!inserted)
+                    {
+                        buttonList.append(b)
+                    }
                 }
-                if(!inserted)
-                {
-                    buttonList.append(b)
-                }
+                
             }
             
         }
@@ -552,7 +556,7 @@ class Game{
              board[0][col] = "?"
             if(b2.titleLabel?.text != "?")
             {
-                print("\(b2.titleLabel?.text)")
+                //print("\(b2.titleLabel?.text)")
                 score = score - 1
             }
             

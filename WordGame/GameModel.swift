@@ -9,6 +9,18 @@
 import UIKit
 import Foundation
 
+struct gameEnd {
+    var gameEndList: Array<GameView>? = nil
+    var gameProgList: Array<GameView>? = nil
+    
+    init(gameList: Array<GameView>, gamePList: Array<GameView>)
+    {
+        gameEndList = gameList
+        gameProgList = gamePList
+    }
+    
+}
+
 class GameModel
 {
     let documentsPath: String = Bundle.main.path(forResource: "Dictionary", ofType: "txt")!
@@ -67,7 +79,7 @@ class GameModel
         
     }
     //TODO: add inorder
-    func endGame(game: GameView) -> Array<GameView>
+    func endGame(game: GameView) -> gameEnd
     {
         game.endState()
         game.gameIndex = gamesEndIndex
@@ -76,12 +88,28 @@ class GameModel
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
-        gamesEnded.append(game)
-        return gamesEnded
+        var i = 0
+        var inserted = false
+        while(i < gamesEnded.count)
+        {
+            if(gamesEnded[i].gameNumberGetSet > game.gameNumberGetSet)
+            {
+                gamesEnded.insert(game, at: i)
+                i = gamesEnded.count
+                inserted = true
+            }
+            i = i + 1
+        }
+        if(!inserted)
+        {
+            gamesEnded.append(game)
+        }
+        var gameStruct: gameEnd = gameEnd(gameList: gamesEnded, gamePList: gamesInProgress)
+        return gameStruct
     }
     
     //TODO: add inorder
-    func winGame(game: GameView) -> Array<GameView>
+    func winGame(game: GameView) -> gameEnd
     {
         game.winState()
         game.gameIndex = gamesWinIndex
@@ -90,8 +118,24 @@ class GameModel
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
-        gamesWon.append(game)
-        return gamesWon
+        var i = 0
+        var inserted = false
+        while(i < gamesWon.count)
+        {
+            if(gamesWon[i].gameNumberGetSet > game.gameNumberGetSet)
+            {
+                gamesWon.insert(game, at: i)
+                i = gamesWon.count
+                inserted = true
+            }
+            i = i + 1
+        }
+        if(!inserted)
+        {
+            gamesWon.append(game)
+        }
+        var gameStruct: gameEnd = gameEnd(gameList: gamesWon, gamePList: gamesInProgress)
+        return gameStruct
     }
     
     func getProgGame(index: Int) -> GameView
