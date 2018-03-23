@@ -17,7 +17,7 @@ class Game{
     var alphabet: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
     var specialIndex:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: 4)
     
-    var score = 100
+    var score = 98
     
     init(dic: Array<String>)
     {

@@ -434,7 +434,13 @@ class GameView: UIView
                     buttons[i*9 + j].backgroundColor = .white
                     buttons[i*9 + j].color = .white
                 }
-                
+                if(buttons[i*9 + j].titleLabel?.text == "?")
+                {
+                    buttons[i*9 + j].setTitleColor(.white, for: .normal)
+                }
+                else{
+                    buttons[i*9 + j].setTitleColor(.black, for: .normal)
+                }
                 j = j + 1
             }
             i = i + 1

@@ -90,19 +90,37 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell!
+        var gameProg = UIView(frame: CGRect(x: 200, y: 20, width: 196, height: 5))
+        var score = 0
+        gameProg.backgroundColor = .red
         if(indexPath.section == 0)
         {
+            score = 98 - gamesInProgress[indexPath.row].getScore()
+            var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
+            gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameNumberGetSet) Score: \(100 - gamesInProgress[indexPath.row].getScore())/98"
+            cell.textLabel!.text = "Game \(gamesInProgress[indexPath.row].gameNumberGetSet) Score: \(score)/98"
+            cell.addSubview(gameProg)
+            cell.addSubview(gameProgGreen)
         }
         else if(indexPath.section == 1)
         {
+            score = 98 - gamesEnded[indexPath.row].getScore()
+            var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
+            gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesEnded[indexPath.row].gameNumberGetSet) Score: \(100 - gamesEnded[indexPath.row].getScore())/98"
+            cell.textLabel!.text = "Game \(gamesEnded[indexPath.row].gameNumberGetSet) Score: \(score)/98"
+            cell.addSubview(gameProg)
+            cell.addSubview(gameProgGreen)
         }
         else{
+            score = 98 - gamesWon[indexPath.row].getScore()
+            var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
+            gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
-            cell.textLabel!.text = "Game \(gamesWon[indexPath.row].gameNumberGetSet) Score: \(100 - gamesWon[indexPath.row].getScore())/98"
+            cell.textLabel!.text = "Game \(gamesWon[indexPath.row].gameNumberGetSet) Score: \(score)/98"
+            cell.addSubview(gameProg)
+            cell.addSubview(gameProgGreen)
         }
         
         return cell!
