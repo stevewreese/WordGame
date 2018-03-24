@@ -21,6 +21,19 @@ struct gameEnd {
     
 }
 
+struct gameList {
+    var gameEndList: Array<GameView>? = nil
+    var gameProgList: Array<GameView>? = nil
+    var gameWinList: Array<GameView>? = nil
+    
+    init(gameEndList: Array<GameView>, gamePList: Array<GameView>, won: Array<GameView>)
+    {
+        self.gameEndList = gameEndList
+        self.gameProgList = gamePList
+        self.gameWinList = won
+    }
+}
+
 class GameModel
 {
     let documentsPath: String = Bundle.main.path(forResource: "Dictionary", ofType: "txt")!
@@ -32,7 +45,7 @@ class GameModel
     private var gamesInProgressIndex = 0
     private var gamesEndIndex = 0
     private var gamesWinIndex = 0
-    private var gameNumber = 1
+    private var gameNumber = 0
     
     private var dictionary : Array<String> = Array()
     private var wordsPicked : Array<String> = Array()
@@ -64,6 +77,7 @@ class GameModel
     
     func newGame() -> Array<GameView>
     {
+        gameNumber = gameNumber + 1
         let game = GameView(frame: UIScreen.main.bounds)
         game.gameIndex = gamesInProgressIndex
         game.gameNumberGetSet = gameNumber
@@ -73,7 +87,6 @@ class GameModel
         game.populateBoard()
         gamesInProgress.append(game)
         gamesInProgressIndex = gamesInProgressIndex + 1
-        gameNumber = gameNumber + 1
         
         return gamesInProgress
         
@@ -211,6 +224,39 @@ class GameModel
             return true
         }
         return false
+    }
+    
+    func addGamesStart(newGame: aGame)
+    {
+        let game = GameView(frame: UIScreen.main.bounds)
+        game.gameNumberGetSet = newGame.gameNum
+        game.theGame = newGame.theGame
+        game.populateBoard()
+        if(newGame.theGame.gameState == "progress")
+        {
+            
+            gamesInProgress.append(game)
+        }
+        else if (newGame.theGame.gameState == "ended")
+        {
+            game.endState()
+            gamesEnded.append(game)
+        }
+        else{
+            game.winState()
+            gamesWon.append(game)
+        }
+        if(gameNumber < newGame.gameNum)
+        {
+            gameNumber = newGame.gameNum
+        }
+        
+    }
+    
+    func gameCollectionLoad() -> gameList
+    {
+        var theLists: gameList = gameList(gameEndList: gamesEnded, gamePList: gamesInProgress, won: gamesWon)
+        return theLists
     }
     
     

@@ -158,6 +158,7 @@ class GameView: UIView
     func endState()
     {
         theState = state.ended
+        theGame?.gameState = "ended"
         buttonEnd.backgroundColor = .gray
         //buttonWon.backgroundColor = .gray
     }
@@ -165,6 +166,7 @@ class GameView: UIView
     func winState()
     {
         theState = state.won
+        theGame?.gameState = "won"
         buttonEnd.backgroundColor = .gray
         //buttonWon.backgroundColor = .gray
     }
@@ -401,6 +403,7 @@ class GameView: UIView
                     theState = state.won
                     
                 }
+                theControl?.save()
             }
             
             wordButtons.removeAll()
@@ -492,5 +495,7 @@ class GameView: UIView
     {
         return (theGame?.score)!
     }
+    
+    
     
 }
