@@ -16,6 +16,7 @@ protocol ControlDelegate: class
     func addGame(game: GameView)
     func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>)
     func updateWon(games: Array<GameView>, gamesProg: Array<GameView>)
+    func save()
     
 }
 
@@ -78,5 +79,21 @@ class GameControl
     func checkWord(buttons: Array<GameButton>) -> Bool
     {
         return theModel!.checkWord(buttons: buttons)
+    }
+    
+    func addGamesStart(game: aGame)
+    {
+        theModel?.addGamesStart(newGame: game)
+    }
+    
+    func gameCollectionLoad() -> gameList
+    {
+        let theGame: gameList = (theModel?.gameCollectionLoad)!()
+        return theGame
+    }
+    
+    func save()
+    {
+        delegate?.save()
     }
 }

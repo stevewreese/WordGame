@@ -64,6 +64,8 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    
     //set the section 3 section for games in progress, game ended and games won
     func numberOfSections(in tableView: UITableView) -> Int {
         return 3
