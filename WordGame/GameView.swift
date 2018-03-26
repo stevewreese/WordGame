@@ -120,7 +120,9 @@ class GameView: UIView
         }
         else
         {
+            theGame?.setDate()
             theControl?.endGame(game: self)
+            
         }
         
     }
@@ -128,6 +130,7 @@ class GameView: UIView
     //event that fires when user win the game
     @objc func win(sender: UIButton!)
     {
+        theGame?.setDate()
         gameWon.removeFromSuperview()
         theControl?.winGame(game: self)
     }
@@ -475,6 +478,20 @@ class GameView: UIView
     {
         return (theGame?.score)!
     }
+    
+    func getIndex() -> Int{
+        return (theGame?.index)!
+    }
+    
+    func setIndex(index: Int){
+        theGame?.index = index
+    }
+    
+    func indexPlueOne(){
+        theGame?.index = (theGame?.index)! + 1
+    }
+    
+
     
     
     
