@@ -52,7 +52,6 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         let buttonNewGame = UIButton(frame: CGRect(x: 250, y: 25, width: 150, height: 20))
         
         buttonNewGame.backgroundColor = .white
-        //buttonEvent.layer.cornerRadius = 5
         buttonNewGame.setTitleColor(.black, for: .normal)
         buttonNewGame.setTitle("New game", for: .normal)
         buttonNewGame.addTarget(self, action: #selector(GameCollectionView.newGame(sender:)), for: .touchUpInside)
@@ -88,16 +87,19 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         }
     }
     
-    //set the cell name
+    //set the cell contents
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         var cell:UITableViewCell!
+        //graphica view of the the games progress
         var gameProg = UIView(frame: CGRect(x: 200, y: 20, width: 196, height: 5))
         var score = 0
         gameProg.backgroundColor = .red
         if(indexPath.section == 0)
         {
+            //the game score
             score = 98 - gamesInProgress[indexPath.row].getScore()
+            //graphica view of the the games progress
             var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
             gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
@@ -108,6 +110,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         else if(indexPath.section == 1)
         {
             score = 98 - gamesEnded[indexPath.row].getScore()
+            //graphica view of the the games progress
             var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
             gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
@@ -117,6 +120,7 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         }
         else{
             score = 98 - gamesWon[indexPath.row].getScore()
+            //graphica view of the the games progress
             var gameProgGreen = UIView(frame: CGRect(x: 200, y: 20, width: score * 2, height: 5))
             gameProgGreen.backgroundColor = .green
             cell = tableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath as IndexPath)
@@ -161,29 +165,28 @@ class GameCollectionView: UIView, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    //event when the new game button is press make a new game and show it in view
     @objc func newGame(sender: UIButton!)
     {
         gamesInProgress = (theControl?.newGame())!
         gameTable.reloadData()
         
     }
- 
+    //up date the lists fot game ended and game in progress when a game is ended
     func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>) {
         gamesEnded = games
-        //if let index = gamesInProgress.index(of: games[games.count - 1]) {
         gamesInProgress = gamesProg
-        //}
         gameTable.reloadData()
         theControl?.leaveGame(game: gamesEnded[games.count - 1])
     }
-    
+    //up date the lists for games won and game in progress when a game is won
     func updateWon(games: Array<GameView>, gamesProg: Array<GameView>) {
         gamesWon = games
         gamesInProgress = gamesProg
         gameTable.reloadData()
         theControl?.leaveGame(game: gamesWon[games.count - 1])
     }
-    
+    //update table view
     func reload()
     {
         gameTable.reloadData()

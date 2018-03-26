@@ -1,7 +1,7 @@
 //
 //  Game.swift
 //  WordGame
-//
+//  represents the game data
 //  Created by Stephen Reese on 2/27/18.
 //  Copyright © 2018 Stephen Reese. All rights reserved.
 //
@@ -9,32 +9,45 @@
 import Foundation
 
 class Game: Codable{
+    //dictionary of words added
     private var dictionary : Array<String> = Array()
+    //words that weren't set regularly
     private var wordsNotUsed : Array<String> = Array()
+    //list of the indexes
     var indexes: Array<Int> = Array()
+    //the 2d array representing the board
     var board:[[String]] = Array(repeating: Array(repeating: "?", count: 9), count: 12)
+    //the direction the letter is added
     var direction:[String] = ["n", "ne", "e", "se", "s", "sw", "w", "nw"]
     var alphabet: [String] = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    //indexes of the special letters
     var specialIndex:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: 4)
+    //the state of the game
     var gameState = "progress"
+    //score of the game
     var score = 98
-    
+    //on init set dictionary and populate the board
     init(dic: Array<String>)
     {
         dictionary = dic
         makeBoard()
     }
-    
+    //set the words and letters
     func makeBoard()
     {
+        //populate Indexes array
         makeIndexes()
+        //take the words in the dictionary
         for word in dictionary
         {
+            //empty array tobe used for all the index that haven't been set but can't be used
             var usedIndexes: Array<Int> = Array()
+            //flag to run loop
             var looking = true
             while(looking)
             {
                 var lookingForIndex = true
+                //flag to
                 var indexSuccess = false
                 var index = 0
                 while(lookingForIndex)

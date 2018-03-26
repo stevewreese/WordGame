@@ -79,14 +79,12 @@ class GameModel
     {
         gameNumber = gameNumber + 1
         let game = GameView(frame: UIScreen.main.bounds)
-        game.gameIndex = gamesInProgressIndex
         game.gameNumberGetSet = gameNumber
         addWords()
         let gameBoard = Game(dic: wordsPicked)
         game.theGame = gameBoard
         game.populateBoard()
         gamesInProgress.append(game)
-        gamesInProgressIndex = gamesInProgressIndex + 1
         
         return gamesInProgress
         
@@ -95,7 +93,7 @@ class GameModel
     func endGame(game: GameView) -> gameEnd
     {
         game.endState()
-        game.gameIndex = gamesEndIndex
+
         gamesEndIndex = gamesEndIndex + 1
         //gamesInProgress.remove(at: gamesInProgress.index(where: game))
         if let index = gamesInProgress.index(of: game) {
@@ -125,7 +123,6 @@ class GameModel
     func winGame(game: GameView) -> gameEnd
     {
         game.winState()
-        game.gameIndex = gamesWinIndex
         gamesWinIndex = gamesWinIndex + 1
         //gamesInProgress.remove(at: gamesInProgress.index(where: game))
         if let index = gamesInProgress.index(of: game) {

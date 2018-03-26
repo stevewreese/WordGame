@@ -19,7 +19,7 @@ class ViewHolder: UIView, ControlDelegate
 {
     //the view for the cellection of games
     var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
-    //teh model to be used
+    //the model to be used
     var theModel = GameModel()
     var theControl: GameControl? = nil
     private static var theGames: [aGame] = []
@@ -40,25 +40,34 @@ class ViewHolder: UIView, ControlDelegate
         catch{
             
         }
+        //add the games to the model
         for game in ViewHolder.theGames{
             theControl?.addGamesStart(game: game)
         }
+        //all the list of the games in progress, games that ended and games won
         let theList: gameList = (theControl?.gameCollectionLoad())!
+        //set the control for all the games in progress
         for game in theList.gameProgList!
         {
             game.setControl = theControl!
         }
+        //add the games in progress to the game collection view
         gameCollector.gamesInProgress = theList.gameProgList!
+        //set the control for all the games ended
         for game in theList.gameEndList!
         {
             game.setControl = theControl!
         }
+        //add the games ended to the game collection view
         gameCollector.gamesEnded = theList.gameEndList!
+        //set the control for all the games won
         for game in theList.gameWinList!
         {
             game.setControl = theControl!
         }
+        //add the games won to the game collection view
         gameCollector.gamesWon = theList.gameWinList!
+        //update game collection view
         gameCollector.reload()
         
         //add game collection to view
@@ -69,12 +78,14 @@ class ViewHolder: UIView, ControlDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
+    //the encoder
     private static let entriesEncoder: JSONEncoder = {
         let entriesEncoder = JSONEncoder()
         
         return entriesEncoder
     }()
     
+    //save the data
     private static func saveData() {
         do{
             let fileURL: URL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("wordgame.json", isDirectory: false)
@@ -86,11 +97,10 @@ class ViewHolder: UIView, ControlDelegate
         catch{
             
         }
-        
-        
-
+  
     }
     
+    //load the data
     private static func loadData() throws -> [aGame] {
         var loadedData: [aGame] = []
         
@@ -109,8 +119,10 @@ class ViewHolder: UIView, ControlDelegate
     func makeNewGame(game: GameView) {
         //set the controler of the GAme View
         game.setControl = theControl!
+        //get a new game to the data holder
         let newgame = aGame.init(gameNum: game.gameNumberGetSet, theGame: game.theGame!)
         ViewHolder.theGames.append(newgame)
+        //save the game
         ViewHolder.saveData()
         //remove gamecontrol and show the game
         gameCollector.removeFromSuperview()
@@ -148,6 +160,7 @@ class ViewHolder: UIView, ControlDelegate
         gameCollector.updateWon(games: games, gamesProg: gamesProg)
     }
     
+    //save the game
     func save()
     {
         ViewHolder.saveData()
