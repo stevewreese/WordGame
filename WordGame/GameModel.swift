@@ -286,5 +286,22 @@ class GameModel
         return theLists
     }
     
+    func changeOrder(game: GameView) -> Array<GameView>
+    {
+        var theIndex = 0
+        if let index = gamesInProgress.index(of: game) {
+            gamesInProgress.remove(at: index)
+            theIndex = index
+        }
+        game.setIndex(index: 0)
+        gamesInProgress.insert(game, at: 0)
+        var i = 1
+        while(i <= theIndex){
+            gamesInProgress[i].setIndex(index: i)
+            i = i + 1
+        }
+        return gamesInProgress
+    }
+    
     
 }

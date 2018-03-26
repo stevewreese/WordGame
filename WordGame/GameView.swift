@@ -381,7 +381,9 @@ class GameView: UIView
                     addSubview(gameWon)
                 }
                 //save game
+                theControl?.changeOrder(game: self)
                 theControl?.save()
+                
             }
             // remove the letters from the array
             wordButtons.removeAll()

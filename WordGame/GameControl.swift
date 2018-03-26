@@ -16,6 +16,7 @@ protocol ControlDelegate: class
     func addGame(game: GameView)
     func updateEnded(games: Array<GameView>, gamesProg: Array<GameView>)
     func updateWon(games: Array<GameView>, gamesProg: Array<GameView>)
+    func updateProg(gamesProg: Array<GameView>)
     func save()
     
 }
@@ -33,7 +34,7 @@ class GameControl
     func newGame() -> Array<GameView>
     {
         let inProgrees = theModel?.newGame()
-        delegate?.makeNewGame(game: inProgrees![(inProgrees?.count)! - 1])
+        delegate?.makeNewGame(game: inProgrees![0])
         
         return inProgrees!
         
@@ -95,5 +96,10 @@ class GameControl
     func save()
     {
         delegate?.save()
+    }
+    
+    func changeOrder(game: GameView)
+    {
+        delegate?.updateProg(gamesProg: (theModel?.changeOrder(game: game))!)
     }
 }
