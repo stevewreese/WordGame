@@ -26,6 +26,8 @@ class Game: Codable{
     var gameState = "progress"
     //score of the game
     var score = 98
+    var timeStamp = Date()
+    var index = 0;
     //on init set dictionary and populate the board
     init(dic: Array<String>)
     {
@@ -576,6 +578,18 @@ class Game: Codable{
         }
         
         
+        setDate()
+        
+    }
+    
+    func setDate()
+    {
+        timeStamp = Date()
+    }
+    
+    func getDate() -> Date
+    {
+        return timeStamp
     }
 
     

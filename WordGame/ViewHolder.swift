@@ -17,6 +17,8 @@ struct aGame: Codable{
 
 class ViewHolder: UIView, ControlDelegate
 {
+    
+    
     //the view for the cellection of games
     var gameCollector = GameCollectionView(frame: UIScreen.main.bounds)
     //the model to be used
@@ -121,7 +123,9 @@ class ViewHolder: UIView, ControlDelegate
         game.setControl = theControl!
         //get a new game to the data holder
         let newgame = aGame.init(gameNum: game.gameNumberGetSet, theGame: game.theGame!)
+        
         ViewHolder.theGames.append(newgame)
+        //ViewHolder.theGames.removeAll()
         //save the game
         ViewHolder.saveData()
         //remove gamecontrol and show the game
@@ -163,6 +167,12 @@ class ViewHolder: UIView, ControlDelegate
     //save the game
     func save()
     {
+        //ViewHolder.theGames.removeAll()
         ViewHolder.saveData()
+    }
+    
+    func updateProg(gamesProg: Array<GameView>) {
+        gameCollector.gamesInProgress = gamesProg
+        gameCollector.reload()
     }
 }
