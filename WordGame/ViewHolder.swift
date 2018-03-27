@@ -93,8 +93,6 @@ class ViewHolder: UIView, ControlDelegate
             let fileURL: URL = try! FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("wordgame.json", isDirectory: false)
             let encodedDataset: Data = try! entriesEncoder.encode(theGames)
             try encodedDataset.write(to: fileURL, options: [.atomic, .completeFileProtection])
-            print(fileURL.absoluteString)
-            print(String(data: encodedDataset, encoding: .utf8) ?? "")
         }
         catch{
             

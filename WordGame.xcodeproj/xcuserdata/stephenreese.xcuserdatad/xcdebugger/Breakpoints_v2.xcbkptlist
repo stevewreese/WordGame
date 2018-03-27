@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameCollectionView.swift"
-            timestampString = "543702137.042173"
+            timestampString = "543808317.7482949"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "177"
             endingLineNumber = "177"
-            landmarkName = "newGame(sender:)"
+            landmarkName = "updateEnded(games:gamesProg:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,7 +26,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.042259"
+            timestampString = "543808317.748387"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "120"
@@ -42,7 +42,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameCollectionView.swift"
-            timestampString = "543702137.042683"
+            timestampString = "543808317.748468"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "157"
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.042751"
+            timestampString = "543808317.7485369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "176"
-            endingLineNumber = "176"
+            startingLineNumber = "174"
+            endingLineNumber = "174"
             landmarkName = "makeBoard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.043067"
+            timestampString = "543808317.748608"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
             landmarkName = "makeBoard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.043376"
+            timestampString = "543808317.7486809"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "289"
+            endingLineNumber = "289"
             landmarkName = "touchesMoved(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.043698"
+            timestampString = "543808317.748754"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "313"
-            endingLineNumber = "313"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
             landmarkName = "touchesBegan(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -122,11 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.0440069"
+            timestampString = "543808317.748825"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "223"
-            endingLineNumber = "223"
+            startingLineNumber = "221"
+            endingLineNumber = "221"
             landmarkName = "touchesMoved(_:with:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.16274"
+            timestampString = "543808317.748898"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "51"
+            endingLineNumber = "51"
             landmarkName = "makeBoard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -154,11 +154,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.163174"
+            timestampString = "543808317.74935"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "90"
+            endingLineNumber = "90"
+            landmarkName = "makeBoard()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WordGame/Game.swift"
+            timestampString = "543808317.749698"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "setWord(row:col:word:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.163433"
+            timestampString = "543808317.750025"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
             landmarkName = "setWord(row:col:word:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +202,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.163687"
+            timestampString = "543808317.750352"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "327"
-            endingLineNumber = "327"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "setWord(row:col:word:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -202,28 +218,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.163926"
+            timestampString = "543808317.750677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "337"
-            endingLineNumber = "337"
-            landmarkName = "setWord(row:col:word:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WordGame/Game.swift"
-            timestampString = "543698365.164188"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "429"
-            endingLineNumber = "429"
-            landmarkName = "checkforRed(button:)"
+            startingLineNumber = "454"
+            endingLineNumber = "454"
+            landmarkName = "checkBlank(buttonsList:button:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.0444289"
+            timestampString = "543808317.750952"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "399"
-            endingLineNumber = "399"
+            startingLineNumber = "397"
+            endingLineNumber = "397"
             landmarkName = "populateBoard()"
             landmarkType = "7">
             <Locations>
@@ -282,11 +282,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.044695"
+            timestampString = "543808317.7510149"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "404"
-            endingLineNumber = "404"
+            startingLineNumber = "402"
+            endingLineNumber = "402"
             landmarkName = "populateBoard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -298,11 +298,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/GameView.swift"
-            timestampString = "543702137.044952"
+            timestampString = "543808317.751075"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "405"
-            endingLineNumber = "405"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
             landmarkName = "populateBoard()"
             landmarkType = "7">
          </BreakpointContent>
@@ -314,11 +314,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.164466"
+            timestampString = "543808317.7511359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "459"
-            endingLineNumber = "459"
+            startingLineNumber = "484"
+            endingLineNumber = "484"
+            landmarkName = "checkforRed(button:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "WordGame/Game.swift"
+            timestampString = "543808317.751412"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "575"
+            endingLineNumber = "575"
             landmarkName = "changeBoard(buttons:fullList:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -330,27 +346,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "WordGame/Game.swift"
-            timestampString = "543698365.1647021"
+            timestampString = "543808317.751685"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "547"
-            endingLineNumber = "547"
-            landmarkName = "changeBoard(buttons:fullList:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "WordGame/Game.swift"
-            timestampString = "543698365.164935"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "488"
-            endingLineNumber = "488"
+            startingLineNumber = "515"
+            endingLineNumber = "515"
             landmarkName = "changeBoard(buttons:fullList:)"
             landmarkType = "7">
          </BreakpointContent>

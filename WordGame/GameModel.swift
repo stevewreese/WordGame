@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-
+//struct to pass the list to the table collections
 struct gameEnd {
     var gameEndList: Array<GameView>? = nil
     var gameProgList: Array<GameView>? = nil
@@ -36,26 +36,25 @@ struct gameList {
 
 class GameModel
 {
+    //file path of the dictionary
     let documentsPath: String = Bundle.main.path(forResource: "Dictionary", ofType: "txt")!
     var textView: String = ""
-    
+    //lists to hold all the game views to show in the colleciton view
     var gamesInProgress : Array<GameView> = Array()
     var gamesEnded : Array<GameView> = Array()
     var gamesWon : Array<GameView> = Array()
-    private var gamesInProgressIndex = 0
-    private var gamesEndIndex = 0
-    private var gamesWinIndex = 0
+    //the number to give to individual names
     private var gameNumber = 0
-    
+    //array for the dictionary
     private var dictionary : Array<String> = Array()
+    //array for the letters selected
     private var wordsPicked : Array<String> = Array()
     
     init()
     {
-        //filePath = documentsPath + "/Dictionary.txt"
         getDictionary()
     }
-    
+    //pull words from txt file
     func getDictionary()
     {
         if let path = Bundle.main.path(forResource: "Dictionary", ofType: "txt"){
@@ -69,103 +68,117 @@ class GameModel
                 for word in dict{
                     dictionary.append(word)
                 }
-                //print(dictionary.count)
             }
         }
 
     }
-    
+    //function to call whne new game is made
     func newGame() -> Array<GameView>
     {
+        //add one to the game number
         gameNumber = gameNumber + 1
+        //make new gameview
         let game = GameView(frame: UIScreen.main.bounds)
+        //set the game number
         game.gameNumberGetSet = gameNumber
+        //add random word to game board
         addWords()
+        //make a game board
         let gameBoard = Game(dic: wordsPicked)
+        //set the game board to the game view
         game.theGame = gameBoard
+        //populate te letter to the board
         game.populateBoard()
+        //move all game up inthe list
         for g in gamesInProgress{
             g.indexPlueOne()
         }
+        //add new game to top of list
         game.setIndex(index: 0)
         gamesInProgress.insert(game, at: 0)
-        
+        //give new game to viewholder
         return gamesInProgress
         
     }
-    //TODO: add inorder
+    //move the game to gamesended list
     func endGame(game: GameView) -> gameEnd
     {
+        //change the state
         game.endState()
+        //remove from the games in progress list
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
+        //add to begining of games ended
         for g in gamesEnded{
             g.indexPlueOne()
         }
         game.setIndex(index: 0)
         gamesEnded.insert(game, at: 0)
+        //give the two lists to the view holder to give to the game collection
         var gameStruct: gameEnd = gameEnd(gameList: gamesEnded, gamePList: gamesInProgress)
         return gameStruct
     }
     
-    //TODO: add inorder
+    //move the game to games won list
     func winGame(game: GameView) -> gameEnd
     {
+        //change the state
         game.winState()
-
+        //remove from the games in progress list
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
-        
+        //add to begining of games won
         for g in gamesWon{
             g.indexPlueOne()
         }
-        
         game.setIndex(index: 0)
-
         gamesWon.insert(game, at: 0)
-
+        //give the two lists to the view holder to give to the game collection
         var gameStruct: gameEnd = gameEnd(gameList: gamesWon, gamePList: gamesInProgress)
         return gameStruct
     }
-    
+    //get certain game in progress by index
     func getProgGame(index: Int) -> GameView
     {
         return gamesInProgress[index]
     }
-    
+    //get certain game ended by index
     func getEndGame(index: Int) -> GameView
     {
         return gamesEnded[index]
     }
-    
+    //get certain game won by index
     func getWinGame(index: Int) -> GameView
     {
         return gamesWon[index]
     }
-    
+    //pick words from diction to add to the game
     func addWords()
     {
-        /*wordsPicked.removeAll()
-        var testWord = "0123456789"
-        wordsPicked.append(testWord)*/
+        //reset array
         wordsPicked.removeAll()
+        //make sure all the word add up to 94 letters
         var wordCount = 0
         while(wordCount < 94)
         {
-            let Rand = Int(arc4random_uniform(UInt32(dictionary.count)))
+            //get random new word from dicitonary
+            let Rand = Int(arc4random_uniform(UInt32(dictionary.count - 1)))
             let newWord = dictionary[Rand]
+            //make sure it does make the word count bigger thatn 94
             if(wordCount + newWord.count > 94)
             {
                 //pick new word
             }
+            //make sure that woard doesn't make so only one letter is left
             else if(wordCount + newWord.count == 93)
             {
                 //pick new word
             }
             else
             {
+                //make sure the word hasn't alrady been picked
                 if(wordsPicked.contains(newWord))
                 {
                     //pick new word
@@ -174,7 +187,6 @@ class GameModel
                 {
                     wordsPicked.append(newWord)
                     wordCount = wordCount + newWord.count
-                    //print(newWord)
                 }
             }
             
@@ -184,9 +196,10 @@ class GameModel
 
         
     }
-    
+    //make sure the words selected hasn't already been picked
     func checkWord(buttons: Array<GameButton>) -> Bool
     {
+        //lines 203 -210 make a word by add letters in order or in backwards order
         var forwardWord = ""
         var backwardWord = ""
         for b in buttons
@@ -194,28 +207,34 @@ class GameModel
             forwardWord = forwardWord + (b.titleLabel?.text)!
             backwardWord = (b.titleLabel?.text)! + backwardWord
         }
+        //see if word is formed in order
         if(dictionary.contains(forwardWord))
         {
             return true
         }
+        //see if word is formed in backwards order
         else if(dictionary.contains(backwardWord))
         {
             return true
         }
         return false
     }
-    
+    //load the game from tha json file and add it to the corresponding list
     func addGamesStart(newGame: aGame)
     {
+        //make a new game view
         let game = GameView(frame: UIScreen.main.bounds)
+        //set game number
         game.gameNumberGetSet = newGame.gameNum
+        //set the gameboard to the gameview
         game.theGame = newGame.theGame
         game.populateBoard()
+        //if game is inprogress
         if(newGame.theGame.gameState == "progress")
         {
             var i = 0
             var inserted = false
-            
+            //insert is in the correct order
             while(i < gamesInProgress.count)
             {
                 if(gamesInProgress[i].getIndex() > game.getIndex())
@@ -231,6 +250,7 @@ class GameModel
                 gamesInProgress.append(game)
             }
         }
+            //if game is ended
         else if (newGame.theGame.gameState == "ended")
         {
             game.endState()
@@ -253,6 +273,7 @@ class GameModel
             }
             
         }
+            //if the game is won
         else{
             game.winState()
             var i = 0
@@ -273,26 +294,29 @@ class GameModel
                 gamesWon.append(game)
             }
         }
+        //set the right game number
         if(gameNumber <= newGame.gameNum)
         {
             gameNumber = newGame.gameNum
         }
         
     }
-    
+    //give all the list to the view holder to give to the game collection
     func gameCollectionLoad() -> gameList
     {
         var theLists: gameList = gameList(gameEndList: gamesEnded, gamePList: gamesInProgress, won: gamesWon)
         return theLists
     }
-    
+    //change the order of the following gameview to the front of the list
     func changeOrder(game: GameView) -> Array<GameView>
     {
         var theIndex = 0
+        //remove from last order
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
             theIndex = index
         }
+        //put it to the beginning
         game.setIndex(index: 0)
         gamesInProgress.insert(game, at: 0)
         var i = 1
@@ -300,6 +324,7 @@ class GameModel
             gamesInProgress[i].setIndex(index: i)
             i = i + 1
         }
+        //give to view holder
         return gamesInProgress
     }
     

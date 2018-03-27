@@ -120,7 +120,6 @@ class GameView: UIView
         }
         else
         {
-            theGame?.setDate()
             theControl?.endGame(game: self)
             
         }
@@ -130,7 +129,6 @@ class GameView: UIView
     //event that fires when user win the game
     @objc func win(sender: UIButton!)
     {
-        theGame?.setDate()
         gameWon.removeFromSuperview()
         theControl?.winGame(game: self)
     }
@@ -362,7 +360,7 @@ class GameView: UIView
                 //update board
                 populateBoard()
                 //if score is 0 then user wins
-                if(theGame?.score == 0)
+                if((theGame?.score)! <= 0)
                 {
                     //set state
                     winState()
@@ -427,7 +425,6 @@ class GameView: UIView
                 }
                 else{
                     buttons[i*9 + j].setTitleColor(.black, for: .normal)
-                    buttons[i*9 + j].backgroundColor = .white
                 }
                 j = j + 1
             }

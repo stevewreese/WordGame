@@ -26,7 +26,6 @@ class Game: Codable{
     var gameState = "progress"
     //score of the game
     var score = 98
-    var timeStamp = Date()
     var index = 0;
     //on init set dictionary and populate the board
     init(dic: Array<String>)
@@ -49,9 +48,10 @@ class Game: Codable{
             while(looking)
             {
                 var lookingForIndex = true
-                //flag to
+                //flag to see if settign word is successful
                 var indexSuccess = false
                 var index = 0
+                //randomlly find an index
                 while(lookingForIndex)
                 {
                     let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
@@ -61,18 +61,21 @@ class Game: Codable{
                         lookingForIndex = false
                     }
                 }
+                //get row and col of the index
                 let row = (index/9)
                 let col = index%9
-
+                
+                //try to set the word if successful return true is not return false
                 indexSuccess = setWord(row: row, col: col, word: word)
-    
+                //if successful stop lookin
                 if(indexSuccess)
                 {
                     looking = false
                 }
-                else{
+                else{ //if unsuccessful set the index to used indexes
                     usedIndexes.append(index)
                 }
+                //if all indexes are exhuasted then stop looking
                 if(usedIndexes.count >= indexes.count)
                 {
                     looking = false
@@ -80,11 +83,13 @@ class Game: Codable{
                 }
             }
         }
+        //set letters of word not set
         setLetters()
+        //get special letters
         setSpecialletters()
 
     }
-    
+    //populate indexes array
     func makeIndexes()
     {
         var i = 0
@@ -94,14 +99,16 @@ class Game: Codable{
             i = i + 1
         }
     }
-    
+    //try to set the word if successful return true is not return false
     func setWord(row: Int, col: Int, word: String) -> Bool
     {
         var nextRow = row
         var nextCol = col
         var usedIndexes: Array<Int> = Array()
+        //make an array of pssible indexes
         var theIndexes:[[Int]] = Array(repeating: Array(repeating: 0, count: 2), count: word.count)
         var index = 0
+        //see if index has already been set
         if(board[nextRow][nextCol] == "?")
         {
             theIndexes[index][0] = nextRow
@@ -114,22 +121,27 @@ class Game: Codable{
             return false
         }
         index = index + 1
+        //randomly set a bordering tile
         while(index < word.count)
         {
+                //randomly pick a direction
                 var dicIndex = Int(arc4random_uniform(UInt32(8)))
                 let middle = dicIndex - 1
                 var goingUp = true
                 while(true)
                 {
                     var placedWord = false
+                    //set direction
                     let direct = direction[dicIndex]
                     switch(direct)
                     {
+                        //if north of letter
                     case "n" :
                         if((nextRow - 1) < 0)
                         {
                             placedWord = false
                         }
+                        //if letter on set in that direction set it
                         else{
                             if(board[nextRow - 1][nextCol] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol))
                             {
@@ -147,12 +159,13 @@ class Game: Codable{
    
                         
                         break
+                        //if northeast of letter
                     case "ne" :
                         if((nextRow - 1) < 0 || (nextCol + 1) > 8)
                         {
                             placedWord = false
                         }
-                        else{
+                        else{//if letter on set in that direction set it
                             if(board[nextRow - 1][nextCol + 1] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol + 1))
                             {
                                 nextRow = nextRow - 1
@@ -170,13 +183,14 @@ class Game: Codable{
                         
                         
                         break
+                        //if east of letter
                     case "e" :
                         if((nextCol + 1) > 8)
                         {
                             placedWord = false
                         }
                         else
-                        {
+                        {//if letter on set in that direction set it
                             if(board[nextRow][nextCol + 1] == "?" && !usedIndexes.contains((nextRow)*9 + nextCol + 1))
                             {
                                 nextCol = nextCol + 1
@@ -193,11 +207,12 @@ class Game: Codable{
                         
                         
                         break
+                        //if southeast of letter
                     case "se" :
                         if((nextRow + 1) > 11 || (nextCol + 1) > 8)
                         {
                             placedWord = false
-                        }
+                        }//if letter on set in that direction set it
                         else{
                             if(board[nextRow + 1][nextCol + 1] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol + 1))
                             {
@@ -216,11 +231,12 @@ class Game: Codable{
                         
                         
                         break
+                        //if south of letter
                     case "s" :
                         if((nextRow + 1) > 11)
                         {
                             placedWord = false
-                        }
+                        }//if letter on set in that direction set it
                         else{
                             if(board[nextRow + 1][nextCol] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol))
                             {
@@ -238,13 +254,14 @@ class Game: Codable{
                         
                         
                         break
+                        //if southwest of letter
                     case "sw" :
                         if((nextRow + 1) > 11 || (nextCol - 1) < 0)
                         {
                             placedWord = false
                         }
                         else
-                        {
+                        {//if letter on set in that direction set it
                             if(board[nextRow + 1][nextCol - 1] == "?" && !usedIndexes.contains((nextRow + 1)*9 + nextCol - 1))
                             {
                                 nextRow = nextRow + 1
@@ -262,13 +279,14 @@ class Game: Codable{
                         
                         
                         break
+                        //if of west
                     case "w" :
                         if((nextCol - 1) < 0)
                         {
                             placedWord = false
                         }
                         else
-                        {
+                        {//if letter on set in that direction set it
                             if(board[nextRow][nextCol - 1] == "?" && !usedIndexes.contains((nextRow)*9 + nextCol - 1))
                             {
                                 nextCol = nextCol - 1
@@ -285,12 +303,13 @@ class Game: Codable{
                         
                         
                         break
+                        //if northwest of letter
                     case "nw" :
                         if((nextRow - 1) < 0 || (nextCol - 1) < 0)
                         {
                             placedWord = false
                         }
-                        else{
+                        else{//if letter on set in that direction set it
                             if(board[nextRow - 1][nextCol - 1] == "?" && !usedIndexes.contains((nextRow - 1)*9 + nextCol - 1))
                             {
                                 nextRow = nextRow - 1
@@ -311,6 +330,7 @@ class Game: Codable{
                     default:
                         return false
                     }
+                    //if not successful pick next clockwise direction
                     if(!placedWord)
                     {
                         if(goingUp)
@@ -325,6 +345,7 @@ class Game: Codable{
                             goingUp = false
                             dicIndex = middle
                         }
+                        //if no direction work set letter failed
                         if(dicIndex < 0)
                         {
                             return false
@@ -339,6 +360,7 @@ class Game: Codable{
             index = index + 1
             }
         var j = 0;
+        //populate the board
         for aChar in word
         {
             board[theIndexes[j][0]][theIndexes[j][1]] = "\(aChar)"
@@ -351,20 +373,23 @@ class Game: Codable{
         }
         return true;
             
-        }
+    }
   
-    
+    //set letter of word unsuccessfully set
     func setLetters()
     {
         for word in wordsNotUsed
         {
             for theChar in word
             {
+                //pick random index not used
                 let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
                 let theIndex = indexes[Rand]
                 let row = theIndex/9
                 let col = theIndex%9
+                //set it
                 board[row][col] = "\(theChar)"
+                //remove index
                 if let index = indexes.index(of: theIndex) {
                     indexes.remove(at: index)
                 }
@@ -374,13 +399,13 @@ class Game: Codable{
             
         }
     }
-    
+    //pick special letters
     func setSpecialletters()
     {
         var i = 0
         while(i < 4)
         {
-            let Rand = Int(arc4random_uniform(UInt32(indexes.count)))
+            let Rand = Int(arc4random_uniform(UInt32(indexes.count - 1)))
             let theIndex = indexes[Rand]
             let RandABC = Int(arc4random_uniform(26))
             let theChar = "\(alphabet[RandABC])"
@@ -395,7 +420,7 @@ class Game: Codable{
             i = i + 1
         }
     }
-    
+    //see if a tile next to the selected tile is blank or not
     func checkBlank(buttonsList: Array<GameButton>, button: GameButton) -> Int
     {
         if(button.col - 1 >= 0)
@@ -436,7 +461,7 @@ class Game: Codable{
         }
         return -1
     }
-    
+    //see if tile is a special tile
     func checkforRed(button: GameButton) -> Int
     {
         var i = 0
@@ -458,12 +483,14 @@ class Game: Codable{
         return result
         
     }
-    
+    //update board base on selected word
     func changeBoard(buttons: Array<GameButton>, fullList: Array<GameButton>)
     {
+        //buttons to change
         var buttonList: Array<GameButton> = Array()
         for b in buttons
         {
+            //check for red if red then remove row
             let redRow = checkforRed(button: b)
             if(redRow != -1)
             {
@@ -500,6 +527,7 @@ class Game: Codable{
                     redCol = redCol + 1
                 }
             }
+            //check for blank
             let blankindex: Int = checkBlank(buttonsList: buttons, button: b)
             if(blankindex != -1)
             {
@@ -559,6 +587,7 @@ class Game: Codable{
             }
             
         }
+        //now update board
         for b2 in buttonList
         {
              var col = b2.col
@@ -571,26 +600,13 @@ class Game: Codable{
              board[0][col] = "?"
             if(b2.titleLabel?.text != "?")
             {
-                //print("\(b2.titleLabel?.text)")
                 score = score - 1
             }
             
         }
         
-        
-        setDate()
-        
     }
     
-    func setDate()
-    {
-        timeStamp = Date()
-    }
-    
-    func getDate() -> Date
-    {
-        return timeStamp
-    }
 
     
     
