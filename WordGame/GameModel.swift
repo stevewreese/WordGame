@@ -84,7 +84,11 @@ class GameModel
         let gameBoard = Game(dic: wordsPicked)
         game.theGame = gameBoard
         game.populateBoard()
-        gamesInProgress.append(game)
+        for g in gamesInProgress{
+            g.indexPlueOne()
+        }
+        game.setIndex(index: 0)
+        gamesInProgress.insert(game, at: 0)
         
         return gamesInProgress
         
@@ -93,28 +97,14 @@ class GameModel
     func endGame(game: GameView) -> gameEnd
     {
         game.endState()
-
-        gamesEndIndex = gamesEndIndex + 1
-        //gamesInProgress.remove(at: gamesInProgress.index(where: game))
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
-        var i = 0
-        var inserted = false
-        while(i < gamesEnded.count)
-        {
-            if(gamesEnded[i].gameNumberGetSet > game.gameNumberGetSet)
-            {
-                gamesEnded.insert(game, at: i)
-                i = gamesEnded.count
-                inserted = true
-            }
-            i = i + 1
+        for g in gamesEnded{
+            g.indexPlueOne()
         }
-        if(!inserted)
-        {
-            gamesEnded.append(game)
-        }
+        game.setIndex(index: 0)
+        gamesEnded.insert(game, at: 0)
         var gameStruct: gameEnd = gameEnd(gameList: gamesEnded, gamePList: gamesInProgress)
         return gameStruct
     }
@@ -123,27 +113,19 @@ class GameModel
     func winGame(game: GameView) -> gameEnd
     {
         game.winState()
-        gamesWinIndex = gamesWinIndex + 1
-        //gamesInProgress.remove(at: gamesInProgress.index(where: game))
+
         if let index = gamesInProgress.index(of: game) {
             gamesInProgress.remove(at: index)
         }
-        var i = 0
-        var inserted = false
-        while(i < gamesWon.count)
-        {
-            if(gamesWon[i].gameNumberGetSet > game.gameNumberGetSet)
-            {
-                gamesWon.insert(game, at: i)
-                i = gamesWon.count
-                inserted = true
-            }
-            i = i + 1
+        
+        for g in gamesWon{
+            g.indexPlueOne()
         }
-        if(!inserted)
-        {
-            gamesWon.append(game)
-        }
+        
+        game.setIndex(index: 0)
+
+        gamesWon.insert(game, at: 0)
+
         var gameStruct: gameEnd = gameEnd(gameList: gamesWon, gamePList: gamesInProgress)
         return gameStruct
     }
@@ -231,19 +213,67 @@ class GameModel
         game.populateBoard()
         if(newGame.theGame.gameState == "progress")
         {
+            var i = 0
+            var inserted = false
             
-            gamesInProgress.append(game)
+            while(i < gamesInProgress.count)
+            {
+                if(gamesInProgress[i].getIndex() > game.getIndex())
+                {
+                    gamesInProgress.insert(game, at: i)
+                    i = gamesInProgress.count
+                    inserted = true
+                }
+                i = i + 1
+            }
+            if(!inserted)
+            {
+                gamesInProgress.append(game)
+            }
         }
         else if (newGame.theGame.gameState == "ended")
         {
             game.endState()
-            gamesEnded.append(game)
+            var i = 0
+            var inserted = false
+            
+            while(i < gamesEnded.count)
+            {
+                if(gamesEnded[i].getIndex() > game.getIndex())
+                {
+                    gamesEnded.insert(game, at: i)
+                    i = gamesEnded.count
+                    inserted = true
+                }
+                i = i + 1
+            }
+            if(!inserted)
+            {
+                gamesEnded.append(game)
+            }
+            
         }
         else{
             game.winState()
-            gamesWon.append(game)
+            var i = 0
+            var inserted = false
+            
+            while(i < gamesWon.count)
+            {
+                if(gamesWon[i].getIndex() > game.getIndex())
+                {
+                    gamesWon.insert(game, at: i)
+                    i = gamesWon.count
+                    inserted = true
+                }
+                i = i + 1
+            }
+            if(!inserted)
+            {
+                gamesWon.append(game)
+            }
         }
-        if(gameNumber < newGame.gameNum)
+        if(gameNumber <= newGame.gameNum)
         {
             gameNumber = newGame.gameNum
         }
@@ -254,6 +284,23 @@ class GameModel
     {
         var theLists: gameList = gameList(gameEndList: gamesEnded, gamePList: gamesInProgress, won: gamesWon)
         return theLists
+    }
+    
+    func changeOrder(game: GameView) -> Array<GameView>
+    {
+        var theIndex = 0
+        if let index = gamesInProgress.index(of: game) {
+            gamesInProgress.remove(at: index)
+            theIndex = index
+        }
+        game.setIndex(index: 0)
+        gamesInProgress.insert(game, at: 0)
+        var i = 1
+        while(i <= theIndex){
+            gamesInProgress[i].setIndex(index: i)
+            i = i + 1
+        }
+        return gamesInProgress
     }
     
     
